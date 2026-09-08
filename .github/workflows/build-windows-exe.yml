@@ -1,0 +1,31 @@
+name: Build Windows .exe for 500 Agents
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch: # Allows manual 1-click trigger to generate .exe
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Windows .exe Installer
+        run: npx electron-packager . "CallCenterCopilot" --platform=win32 --arch=x64 --out=dist --overwrite --prune=true
+
+      - name: Upload Windows .exe as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CallCenterCopilot-Windows-x64
+          path: dist/CallCenterCopilot-win32-x64/

@@ -1,0 +1,43 @@
+{
+  "name": "chatbot-for-call-center-",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "node server.js",
+    "electron": "electron .",
+    "dev": "node server.js",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.callcenter.copilot",
+    "productName": "CallCenterCopilot",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": true,
+      "createDesktopShortcut": true,
+      "runAfterFinish": true
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "cors": "^2.8.6",
+    "electron": "^41.7.1",
+    "electron-builder": "^26.15.3",
+    "electron-packager": "^17.1.2",
+    "express": "^5.2.1",
+    "pdf-parse": "^2.4.5"
+  }
+}

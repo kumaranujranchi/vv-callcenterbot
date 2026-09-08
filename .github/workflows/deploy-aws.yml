@@ -1,0 +1,35 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch: # Allows manual 1-click deployment from GitHub Actions UI
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to AWS EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        if: env.EC2_HOST != ''
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER || 'ubuntu' }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: ${{ secrets.EC2_PORT || 22 }}
+          script: |
+            echo "🚀 Deploying updates to Call Center Copilot on AWS..."
+            mkdir -p ~/callcenter
+            cd ~/callcenter
+            if [ -d ".git" ]; then
+              git pull origin main
+            fi
+            npm install --production
+            pm2 restart callcenter-copilot || pm2 start server.js --name "callcenter-copilot"
+            pm2 save
+            echo "✅ Successfully deployed to AWS EC2!"

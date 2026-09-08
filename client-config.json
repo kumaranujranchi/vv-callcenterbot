@@ -1,0 +1,6 @@
+{
+  "serverUrl": "http://localhost:3847",
+  "appName": "Call Center AI Copilot",
+  "hotkey": "CommandOrControl+Shift+Space",
+  "agentOnlyMode": true
+}

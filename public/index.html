@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Call Center AI Copilot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-dark">
+
+  <!-- 1. FLOATING BUBBLE (COLLAPSED STATE) -->
+  <div id="floating-bubble" class="floating-bubble visible" title="Click to open Call Center Copilot (Ctrl+Shift+Space)">
+    <div class="bubble-glow"></div>
+    <div class="bubble-content">
+      <div class="bubble-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          <circle cx="9" cy="10" r="1" fill="currentColor"></circle>
+          <circle cx="12" cy="10" r="1" fill="currentColor"></circle>
+          <circle cx="15" cy="10" r="1" fill="currentColor"></circle>
+        </svg>
+      </div>
+      <div class="status-pulse" title="Ready to assist"></div>
+    </div>
+    <div class="bubble-drag-handle" title="Drag to reposition">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><circle cx="9" cy="9" r="1.5"/><circle cx="15" cy="9" r="1.5"/><circle cx="9" cy="15" r="1.5"/><circle cx="15" cy="15" r="1.5"/></svg>
+    </div>
+  </div>
+
+  <!-- 2. EXPANDED CHAT PANEL -->
+  <div id="chat-panel" class="chat-panel hidden">
+    <!-- Header -->
+    <header class="panel-header">
+      <div class="header-left">
+        <div class="agent-avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="22"></line>
+          </svg>
+          <span class="online-dot"></span>
+        </div>
+        <div class="header-info">
+          <div class="title-row">
+            <h1 class="app-title">Copilot Call Assistant</h1>
+            <span class="badge-live">LIVE</span>
+          </div>
+          <p class="subtitle" id="kb-summary">Knowledge Base: Loading...</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="btn-kb" class="icon-btn" title="Knowledge Base Manager">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        </button>
+        <button id="btn-settings" class="icon-btn" title="API Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+        <button id="btn-collapse" class="icon-btn" title="Collapse to Bubble">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Quick Query Suggestions for Call Center Agents -->
+    <div class="quick-chips-container">
+      <div class="chips-scroll">
+        <button class="chip" data-q="Customer ka router red light blink kar raha hai kya karein?">🔴 Red Light LOS Fix</button>
+        <button class="chip" data-q="What are the broadband plans and pricing?">⚡ Broadband Plans</button>
+        <button class="chip" data-q="What is the return and replacement policy?">📦 7-Day Return Policy</button>
+        <button class="chip" data-q="Refund timeline for UPI and Credit Card payments?">💳 Refund Timelines</button>
+        <button class="chip" data-q="Wi-Fi password change karne ke steps batao">📶 Wi-Fi Password</button>
+      </div>
+    </div>
+
+    <!-- Messages Container -->
+    <main id="chat-messages" class="chat-messages">
+      <div class="welcome-message">
+        <div class="welcome-badge">CALL CENTER REAL-TIME COPILOT</div>
+        <h2>Namaste Agent! Call Assist Ready Hai</h2>
+        <p>Customer call ke dauraan koi bhi product question type karein. Instant accurate answer, bullet steps aur customer script mil jayega.</p>
+        <div class="shortcut-hint">
+          <span>Global Shortcut:</span> <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd>
+        </div>
+      </div>
+    </main>
+
+    <!-- Input Footer -->
+    <footer class="panel-footer">
+      <form id="chat-form" class="chat-form">
+        <div class="input-wrapper">
+          <input 
+            type="text" 
+            id="query-input" 
+            placeholder="Ask product query (e.g. router red light, return policy)..." 
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button type="button" id="btn-clear-input" class="btn-clear hidden" title="Clear">✕</button>
+        </div>
+        <button type="submit" id="btn-send" class="btn-send" title="Search Knowledge Base (Enter)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </form>
+      <div class="footer-meta">
+        <span id="response-metric">⚡ Sub-second retrieval active</span>
+        <span class="footer-tag">Call Center v1.0</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- MODAL: KNOWLEDGE BASE MANAGER -->
+  <div id="modal-kb" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>📚 Knowledge Base Management</h3>
+        <button class="modal-close" id="btn-close-kb">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">Yahan aap naye product manuals, FAQs, price sheets add kar sakte hain. System automatic re-index karega.</p>
+        
+        <div class="kb-doc-list" id="kb-doc-list">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="add-doc-section">
+          <h4>Add New Product Doc / FAQ</h4>
+          <input type="text" id="new-doc-title" placeholder="Document name (e.g. warranty_policy.md)" />
+          <textarea id="new-doc-content" rows="4" placeholder="Paste product details, pricing, FAQs, or support scripts here..."></textarea>
+          <button id="btn-add-doc" class="primary-btn">+ Add & Index Document</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: SETTINGS (GEMINI API KEY) -->
+  <div id="modal-settings" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>⚙️ AI & Assistant Settings</h3>
+        <button class="modal-close" id="btn-close-settings">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="setting-api-key">Google Gemini API Key:</label>
+          <input type="password" id="setting-api-key" placeholder="AIzaSy... (Leave empty for fast local extractor mode)" />
+          <small>Gemini API key enables real-time generative bullet points & customer phone scripts.</small>
+        </div>
+        <div class="form-group">
+          <label for="setting-model">Model Selection:</label>
+          <select id="setting-model">
+            <option value="gemini-1.5-flash">Gemini 1.5 Flash (Ultra-fast, recommended)</option>
+            <option value="gemini-2.0-flash">Gemini 2.0 Flash (Next-Gen)</option>
+            <option value="gemini-1.5-pro">Gemini 1.5 Pro (Deep reasoning)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="setting-hotkey">Global Hotkey:</label>
+          <input type="text" id="setting-hotkey" value="CommandOrControl+Shift+Space" readonly />
+        </div>
+        <button id="btn-save-settings" class="primary-btn">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden">Copied to clipboard!</div>
+
+  <script src="app.js"></script>
+</body>
+</html>

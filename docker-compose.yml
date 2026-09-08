@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  copilot-server:
+    build: .
+    container_name: callcenter-copilot-server
+    restart: always
+    ports:
+      - "3847:3847"
+    volumes:
+      - ./knowledge:/app/knowledge
+      - ./config.json:/app/config.json
+    environment:
+      - PORT=3847
+      - NODE_ENV=production
