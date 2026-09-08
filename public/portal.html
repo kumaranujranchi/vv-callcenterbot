@@ -3,29 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Call Center AI Copilot | Official Agent Hub & Downloads</title>
+  <title>Vastu Vihar - Call Center AI Support - Powered By Team Marketing</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    /* BRAND COLOR PALETTE (EXACT CODES PROVIDED) */
     :root {
-      --bg-base: #f8fafc;
+      --brand-red: #F23545;
+      --brand-dark-red: #BF2A37;
+      --brand-navy: #1C2B59;
+      --brand-sky: #30A9D9;
+      --brand-light: #F2F2F2;
+      
       --bg-surface: #ffffff;
-      --bg-subtle: #f1f5f9;
-      --border-light: #e2e8f0;
-      --border-accent: rgba(99, 102, 241, 0.3);
-      --text-main: #0f172a;
-      --text-muted: #475569;
-      --text-sub: #64748b;
-      --primary: #4f46e5;
-      --primary-hover: #4338ca;
-      --primary-grad: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #8b5cf6 100%);
-      --accent-cyan: #0284c7;
-      --accent-green: #059669;
-      --accent-green-bg: #ecfdf5;
-      --shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.04);
-      --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
-      --shadow-lg: 0 20px 40px -10px rgba(79, 70, 229, 0.12), 0 10px 20px -5px rgba(15, 23, 42, 0.04);
+      --border-subtle: rgba(28, 43, 89, 0.12);
+      --border-focus: #30A9D9;
+      
+      --text-navy: #1C2B59;
+      --text-body: #334155;
+      --text-muted: #64748b;
+      
+      --gradient-red: linear-gradient(135deg, #F23545 0%, #BF2A37 100%);
+      --gradient-sky: linear-gradient(135deg, #30A9D9 0%, #0284c7 100%);
+      --gradient-navy: linear-gradient(135deg, #1C2B59 0%, #0f172a 100%);
+      
+      --shadow-sm: 0 2px 8px rgba(28, 43, 89, 0.05);
+      --shadow-md: 0 10px 30px -5px rgba(28, 43, 89, 0.08), 0 4px 12px -2px rgba(28, 43, 89, 0.04);
+      --shadow-lg: 0 20px 40px -10px rgba(242, 53, 69, 0.2), 0 8px 16px -4px rgba(28, 43, 89, 0.06);
+      
       --radius-xl: 20px;
       --radius-lg: 14px;
       --radius-md: 10px;
@@ -35,25 +41,25 @@
 
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg-base);
-      color: var(--text-main);
+      background-color: var(--brand-light);
+      color: var(--text-body);
       min-height: 100vh;
       overflow-x: hidden;
       line-height: 1.6;
       background-image: 
-        radial-gradient(at 10% 10%, rgba(99, 102, 241, 0.07) 0px, transparent 50%),
-        radial-gradient(at 90% 15%, rgba(6, 182, 212, 0.08) 0px, transparent 50%),
-        radial-gradient(at 50% 95%, rgba(244, 63, 94, 0.05) 0px, transparent 50%);
+        radial-gradient(at 10% 10%, rgba(242, 53, 69, 0.05) 0px, transparent 45%),
+        radial-gradient(at 90% 15%, rgba(48, 169, 217, 0.08) 0px, transparent 45%),
+        radial-gradient(at 50% 90%, rgba(28, 43, 89, 0.04) 0px, transparent 50%);
       background-attachment: fixed;
     }
 
-    /* Subtle geometric mesh background */
-    .bg-grid-pattern {
+    /* Geometric mesh pattern */
+    .bg-mesh-pattern {
       position: fixed;
       inset: 0;
       background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-      background-size: 32px 32px;
-      opacity: 0.45;
+      background-size: 28px 28px;
+      opacity: 0.55;
       pointer-events: none;
       z-index: 0;
     }
@@ -66,48 +72,58 @@
       z-index: 1;
     }
 
-    /* Navigation */
+    /* Navbar */
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px 0;
-      border-bottom: 1px solid var(--border-light);
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border-subtle);
     }
 
-    .nav-logo {
+    .nav-brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       text-decoration: none;
-      color: var(--text-main);
     }
 
-    .logo-badge {
-      width: 42px;
-      height: 42px;
+    .brand-logo-box {
+      width: 46px;
+      height: 46px;
       border-radius: 12px;
-      background: var(--primary-grad);
+      background: var(--gradient-red);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
+      box-shadow: 0 6px 18px rgba(242, 53, 69, 0.35);
       color: #fff;
     }
 
-    .logo-badge svg { width: 22px; height: 22px; }
+    .brand-logo-box svg { width: 24px; height: 24px; }
 
-    .brand-title {
-      font-size: 18px;
-      font-weight: 800;
+    .brand-title-text {
+      font-size: 21px;
+      font-weight: 900;
+      color: var(--brand-navy);
       letter-spacing: -0.02em;
+      line-height: 1.2;
     }
 
-    .brand-sub {
+    .brand-subtitle-tag {
       font-size: 11px;
-      color: var(--primary);
-      font-weight: 700;
-      letter-spacing: 0.04em;
+      color: var(--brand-dark-red);
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tag-marketing {
+      color: var(--brand-sky);
+      font-weight: 800;
     }
 
     .nav-actions {
@@ -116,15 +132,15 @@
       gap: 12px;
     }
 
-    .btn-nav-light {
+    .btn-nav-outline {
       background: #ffffff;
-      border: 1px solid var(--border-light);
-      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      color: var(--brand-navy);
       padding: 9px 18px;
       border-radius: 9px;
       text-decoration: none;
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -132,21 +148,22 @@
       transition: all 0.2s ease;
     }
 
-    .btn-nav-light:hover {
-      background: var(--bg-subtle);
-      border-color: #cbd5e1;
+    .btn-nav-outline:hover {
+      background: #f8fafc;
+      border-color: var(--brand-sky);
+      color: var(--brand-sky);
       transform: translateY(-1px);
     }
 
     .btn-nav-admin {
-      background: var(--primary-grad);
+      background: var(--brand-navy);
       color: #ffffff;
       border: none;
-      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+      box-shadow: 0 4px 14px rgba(28, 43, 89, 0.25);
     }
 
     .btn-nav-admin:hover {
-      opacity: 0.95;
+      background: #152248;
       color: #fff;
       transform: translateY(-1px);
     }
@@ -157,141 +174,154 @@
       padding: 56px 0 36px;
     }
 
-    .live-broadcast-pill {
+    .hero-badge-pill {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--accent-green-bg);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 6px 16px;
+      background: #ffffff;
+      border: 1px solid rgba(48, 169, 217, 0.35);
+      padding: 7px 18px;
       border-radius: 30px;
       font-size: 12px;
-      font-weight: 700;
-      color: var(--accent-green);
+      font-weight: 800;
+      color: var(--brand-navy);
       margin-bottom: 24px;
-      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.1);
+      box-shadow: var(--shadow-sm);
     }
 
     .pulse-dot {
-      width: 8px;
-      height: 8px;
+      width: 9px;
+      height: 9px;
       border-radius: 50%;
-      background: var(--accent-green);
-      box-shadow: 0 0 10px var(--accent-green);
+      background: var(--brand-red);
+      box-shadow: 0 0 10px var(--brand-red);
       animation: livePulse 1.8s infinite;
     }
 
-    .hero-title {
-      font-size: 50px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
+    .hero-heading {
+      font-size: 52px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
       line-height: 1.15;
-      color: var(--text-main);
+      color: var(--brand-navy);
       margin-bottom: 18px;
     }
 
-    .hero-title .gradient-text {
-      background: var(--primary-grad);
+    .hero-heading .brand-highlight {
+      background: var(--gradient-red);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .hero-desc {
-      font-size: 18px;
+    .hero-subheading {
+      font-size: 19px;
       color: var(--text-muted);
-      max-width: 660px;
+      max-width: 720px;
       margin: 0 auto 36px;
-      font-weight: 450;
+      font-weight: 500;
+      line-height: 1.6;
     }
 
-    /* Real-Time Database Status Grid */
-    .db-status-grid {
+    .power-tagline {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--brand-dark-red);
+      background: rgba(242, 53, 69, 0.08);
+      padding: 4px 14px;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+
+    /* Database Status Bar */
+    .db-status-bar {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
       background: #ffffff;
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--border-subtle);
+      border-top: 4px solid var(--brand-red);
       border-radius: var(--radius-lg);
-      padding: 20px 24px;
+      padding: 22px 26px;
       box-shadow: var(--shadow-md);
       margin-bottom: 56px;
     }
 
     @media (max-width: 800px) {
-      .db-status-grid { grid-template-columns: 1fr 1fr; }
-      .hero-title { font-size: 34px; }
+      .db-status-bar { grid-template-columns: 1fr 1fr; }
+      .hero-heading { font-size: 34px; }
     }
 
     .status-col {
       display: flex;
       flex-direction: column;
       gap: 4px;
-      padding: 4px 8px;
+      padding: 4px 10px;
     }
 
     .status-col:not(:last-child) {
-      border-right: 1px solid var(--border-light);
+      border-right: 1px solid var(--border-subtle);
     }
 
     @media (max-width: 800px) {
       .status-col:nth-child(2) { border-right: none; }
     }
 
-    .col-label {
+    .col-title {
       font-size: 11px;
-      color: var(--text-sub);
-      font-weight: 700;
+      color: var(--text-muted);
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.06em;
     }
 
-    .col-value {
-      font-size: 19px;
-      font-weight: 800;
-      color: var(--text-main);
+    .col-data {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--brand-navy);
     }
 
-    .col-sub {
+    .col-meta {
       font-size: 12px;
-      color: var(--accent-cyan);
+      color: var(--brand-sky);
       font-family: 'JetBrains Mono', monospace;
-      font-weight: 500;
+      font-weight: 600;
     }
 
     /* Section Headings */
     .section-head {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 36px;
     }
 
-    .section-badge {
+    .badge-pill {
       display: inline-block;
       font-size: 11px;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--primary);
-      background: rgba(79, 70, 229, 0.08);
-      padding: 4px 12px;
+      color: var(--brand-red);
+      background: rgba(242, 53, 69, 0.08);
+      padding: 5px 14px;
       border-radius: 20px;
       margin-bottom: 8px;
     }
 
     .section-title {
-      font-size: 30px;
-      font-weight: 800;
+      font-size: 32px;
+      font-weight: 900;
       letter-spacing: -0.02em;
-      color: var(--text-main);
+      color: var(--brand-navy);
     }
 
     .section-desc {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--text-muted);
       margin-top: 6px;
     }
 
-    /* Downloads Grid */
-    .downloads-container {
+    /* Download Cards */
+    .downloads-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 24px;
@@ -299,14 +329,14 @@
     }
 
     @media (max-width: 768px) {
-      .downloads-container { grid-template-columns: 1fr; }
+      .downloads-grid { grid-template-columns: 1fr; }
     }
 
     .dl-card {
       background: #ffffff;
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--border-subtle);
       border-radius: var(--radius-xl);
-      padding: 32px;
+      padding: 34px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -318,177 +348,199 @@
     .dl-card:hover {
       transform: translateY(-4px);
       box-shadow: var(--shadow-lg);
-      border-color: rgba(79, 70, 229, 0.4);
+      border-color: var(--brand-red);
     }
 
     .dl-card-featured {
-      border: 2px solid var(--primary);
-      background: linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
+      border: 2px solid var(--brand-red);
+      background: linear-gradient(180deg, #ffffff 0%, #fffbfb 100%);
     }
 
-    .card-ribbon {
+    .featured-ribbon {
       position: absolute;
-      top: 14px;
-      right: 18px;
-      background: var(--primary);
+      top: 16px;
+      right: 20px;
+      background: var(--brand-red);
       color: #fff;
       font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      padding: 4px 10px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
       border-radius: 20px;
       text-transform: uppercase;
     }
 
-    .dl-header {
+    .dl-top-row {
       display: flex;
       align-items: center;
       gap: 18px;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
     }
 
     .os-avatar {
-      width: 54px;
-      height: 54px;
+      width: 56px;
+      height: 56px;
       border-radius: 14px;
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-light);
+      background: rgba(48, 169, 217, 0.1);
+      border: 1px solid rgba(48, 169, 217, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      color: var(--brand-sky);
     }
 
-    .os-avatar svg { width: 28px; height: 28px; fill: currentColor; }
+    .os-avatar svg { width: 30px; height: 30px; fill: currentColor; }
 
-    .dl-title {
-      font-size: 20px;
+    .os-avatar-mac {
+      background: rgba(28, 43, 89, 0.06);
+      border: 1px solid rgba(28, 43, 89, 0.15);
+      color: var(--brand-navy);
+    }
+
+    .dl-name {
+      font-size: 21px;
       font-weight: 800;
-      color: var(--text-main);
+      color: var(--brand-navy);
     }
 
-    .dl-specs {
+    .dl-version {
       font-size: 12px;
-      color: var(--text-sub);
-      font-weight: 500;
+      color: var(--text-muted);
+      font-weight: 600;
       margin-top: 2px;
     }
 
-    .dl-checklist {
+    .dl-features {
       list-style: none;
-      margin-bottom: 28px;
+      margin-bottom: 30px;
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    .dl-checklist li {
+    .dl-features li {
       display: flex;
       align-items: center;
       gap: 10px;
       font-size: 13px;
-      color: var(--text-muted);
+      color: var(--text-body);
       font-weight: 500;
     }
 
-    .check-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: var(--accent-green-bg);
-      color: var(--accent-green);
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      background: rgba(242, 53, 69, 0.1);
+      color: var(--brand-red);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
 
-    .check-icon svg { width: 12px; height: 12px; }
+    .check-box svg { width: 13px; height: 13px; }
 
-    .btn-dl-primary {
+    .btn-download-red {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      background: var(--primary-grad);
+      background: var(--gradient-red);
       color: #fff;
       text-decoration: none;
-      padding: 14px 20px;
+      padding: 15px 22px;
       border-radius: var(--radius-md);
-      font-weight: 700;
+      font-weight: 800;
       font-size: 14px;
-      box-shadow: 0 6px 18px rgba(79, 70, 229, 0.3);
+      box-shadow: 0 6px 20px rgba(242, 53, 69, 0.35);
       transition: all 0.2s ease;
     }
 
-    .btn-dl-primary:hover {
+    .btn-download-red:hover {
       opacity: 0.95;
-      transform: translateY(-1px);
-      box-shadow: 0 10px 24px rgba(79, 70, 229, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba(242, 53, 69, 0.45);
     }
 
-    .btn-dl-outline {
-      background: #ffffff;
-      color: var(--text-main);
-      border: 1px solid var(--border-light);
-      box-shadow: var(--shadow-sm);
+    .btn-download-navy {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--brand-navy);
+      color: #fff;
+      text-decoration: none;
+      padding: 15px 22px;
+      border-radius: var(--radius-md);
+      font-weight: 800;
+      font-size: 14px;
+      box-shadow: 0 6px 18px rgba(28, 43, 89, 0.25);
+      transition: all 0.2s ease;
     }
 
-    .btn-dl-outline:hover {
-      background: var(--bg-subtle);
-      border-color: #cbd5e1;
-      box-shadow: var(--shadow-md);
+    .btn-download-navy:hover {
+      background: #152248;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(28, 43, 89, 0.35);
     }
 
-    /* How It Works - Clean 3-Step Cards */
+    /* 3 Steps Guide */
     .steps-section {
       margin-bottom: 64px;
     }
 
-    .steps-row {
+    .steps-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
     }
 
     @media (max-width: 768px) {
-      .steps-row { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
     }
 
-    .step-box {
+    .step-card {
       background: #ffffff;
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
-      padding: 26px;
+      padding: 28px;
       box-shadow: var(--shadow-sm);
-      position: relative;
+      transition: all 0.2s;
     }
 
-    .step-badge {
-      width: 32px;
-      height: 32px;
+    .step-card:hover {
+      border-color: var(--brand-sky);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .step-number-box {
+      width: 36px;
+      height: 36px;
       border-radius: 8px;
-      background: rgba(79, 70, 229, 0.1);
-      color: var(--primary);
-      font-weight: 800;
-      font-size: 14px;
+      background: rgba(48, 169, 217, 0.12);
+      color: var(--brand-sky);
+      font-weight: 900;
+      font-size: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 16px;
     }
 
-    .step-box h3 {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-main);
+    .step-card h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--brand-navy);
       margin-bottom: 8px;
     }
 
-    .step-box p {
+    .step-card p {
       font-size: 13px;
       color: var(--text-muted);
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
     kbd {
@@ -498,114 +550,138 @@
       border-radius: 4px;
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
-      color: var(--text-main);
-      font-weight: 600;
+      color: var(--brand-navy);
+      font-weight: 700;
     }
 
-    /* Interactive Live Knowledge Test - Light Theme */
+    /* Live Interactive Test (Vastu Vihar Branded) */
     .test-box {
       background: #ffffff;
-      border: 1px solid var(--border-light);
+      border: 1px solid var(--border-subtle);
       border-radius: var(--radius-xl);
-      padding: 36px;
+      padding: 40px;
       box-shadow: var(--shadow-md);
       margin-bottom: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .test-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #F23545 0%, #30A9D9 50%, #1C2B59 100%);
     }
 
     .test-form {
-      max-width: 650px;
-      margin: 20px auto 16px;
+      max-width: 680px;
+      margin: 24px auto 16px;
       display: flex;
-      gap: 10px;
+      gap: 12px;
     }
 
     .test-input {
       flex: 1;
-      padding: 13px 18px;
+      padding: 14px 20px;
       border-radius: var(--radius-md);
-      background: #f8fafc;
-      border: 1px solid var(--border-light);
-      color: var(--text-main);
+      background: var(--brand-light);
+      border: 1px solid var(--border-subtle);
+      color: var(--brand-navy);
       font-size: 14px;
       font-family: inherit;
+      font-weight: 600;
       outline: none;
       transition: all 0.2s;
     }
 
     .test-input:focus {
       background: #ffffff;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+      border-color: var(--brand-sky);
+      box-shadow: 0 0 0 3px rgba(48, 169, 217, 0.2);
     }
 
     .btn-test-action {
-      background: var(--primary-grad);
+      background: var(--gradient-red);
       border: none;
       color: #fff;
-      padding: 13px 22px;
+      padding: 14px 24px;
       border-radius: var(--radius-md);
-      font-weight: 700;
+      font-weight: 800;
       font-size: 13px;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+      box-shadow: 0 4px 14px rgba(242, 53, 69, 0.3);
+      transition: all 0.2s;
     }
 
-    .btn-test-action:hover { opacity: 0.95; }
+    .btn-test-action:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
 
     .test-output {
-      max-width: 650px;
+      max-width: 680px;
       margin: 0 auto;
-      background: #f8fafc;
-      border: 1px solid var(--border-light);
+      background: var(--brand-light);
+      border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 18px;
+      padding: 20px;
       font-size: 13px;
       line-height: 1.6;
-      color: var(--text-muted);
+      color: var(--text-body);
       min-height: 90px;
       text-align: left;
     }
 
     /* Footer */
     footer {
-      border-top: 1px solid var(--border-light);
+      border-top: 1px solid var(--border-subtle);
       padding: 32px 0 48px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 13px;
-      color: var(--text-sub);
+      color: var(--text-muted);
+    }
+
+    .footer-brand {
+      color: var(--brand-navy);
+      font-weight: 800;
     }
 
     @keyframes livePulse {
       0% { opacity: 0.6; transform: scale(0.9); }
-      50% { opacity: 1; transform: scale(1.15); }
+      50% { opacity: 1; transform: scale(1.2); }
       100% { opacity: 0.6; transform: scale(0.9); }
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-grid-pattern"></div>
+  <div class="bg-mesh-pattern"></div>
 
   <div class="container">
     <!-- Navbar -->
     <nav>
-      <a href="/portal" class="nav-logo">
-        <div class="logo-badge">
+      <a href="/portal" class="nav-brand">
+        <div class="brand-logo-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
         </div>
         <div>
-          <div class="brand-title">Call Center AI Copilot</div>
-          <div class="brand-sub">CENTRAL 500-AGENT PLATFORM</div>
+          <div class="brand-title-text">Vastu Vihar</div>
+          <div class="brand-subtitle-tag">
+            CALL CENTER AI SUPPORT • <span class="tag-marketing">POWERED BY TEAM MARKETING</span>
+          </div>
         </div>
       </a>
       <div class="nav-actions">
-        <a href="/" target="_blank" class="btn-nav-light">
+        <a href="/" target="_blank" class="btn-nav-outline">
           <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
           Open Web Chatbot
         </a>
-        <a href="/admin" class="btn-nav-light btn-nav-admin">
+        <a href="/admin" class="btn-nav-outline btn-nav-admin">
           <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
           Master Admin Center
         </a>
@@ -614,88 +690,91 @@
 
     <!-- Hero Header -->
     <header class="hero">
-      <div class="live-broadcast-pill">
+      <div class="hero-badge-pill">
         <div class="pulse-dot"></div>
-        <span>CENTRAL DATABASE LIVE &amp; BROADCASTING TO 500 AGENTS</span>
+        <span>VASTU VIHAR CENTRAL KNOWLEDGE BASE LIVE &amp; BROADCASTING</span>
       </div>
-      <h1 class="hero-title">
-        The Floating AI Copilot for<br/>
-        <span class="gradient-text">500+ Call Center Agents</span>
+      <h1 class="hero-heading">
+        Vastu Vihar — Call Center AI Support<br/>
+        <span class="brand-highlight">For 500+ Active Agents</span>
       </h1>
-      <p class="hero-desc">
-        Call center agent ke PC screen par floating rehta hai. Customer call ke dauraan product se judhi koi bhi jaankari sub-second mein bullet points aur live customer scripts ke sath deta hai.
+      <p class="hero-subheading">
+        Screen ke corner mein rehta hai hamesha floating. Vastu Vihar projects, pricing, documents aur policies se judhi koi bhi jaankari sub-second mein bullet points aur customer scripts ke sath deta hai.
       </p>
+      <div>
+        <span class="power-tagline">🚀 Powered By Team Marketing</span>
+      </div>
     </header>
 
-    <!-- Real-time Database Status Bar (Light Card) -->
-    <div class="db-status-grid">
+    <!-- Real-time Database Status Bar -->
+    <div class="db-status-bar">
       <div class="status-col">
-        <span class="col-label">Cloud Infrastructure</span>
-        <span class="col-value" style="color:var(--accent-green);">🟢 AWS Live</span>
-        <span class="col-sub">99.99% Uptime Ready</span>
+        <span class="col-title">Infrastructure</span>
+        <span class="col-data" style="color:var(--brand-dark-red);">🟢 AWS Active</span>
+        <span class="col-meta">99.99% Uptime SLA</span>
       </div>
       <div class="status-col">
-        <span class="col-label">Knowledge Base Status</span>
-        <span class="col-value" id="kb-doc-count">2 Product Docs</span>
-        <span class="col-sub" id="kb-chunks-count">13 Chunks Indexed</span>
+        <span class="col-title">Vastu Vihar Knowledge Base</span>
+        <span class="col-data" id="kb-doc-count">2 Product Docs</span>
+        <span class="col-meta" id="kb-chunks-count">13 Chunks Indexed</span>
       </div>
       <div class="status-col">
-        <span class="col-label">Last Database Update</span>
-        <span class="col-value" id="kb-last-updated" style="font-size:16px;">Live Syncing...</span>
-        <span class="col-sub">Auto-broadcast active</span>
+        <span class="col-title">Last Database Update</span>
+        <span class="col-data" id="kb-last-updated" style="font-size:16px;">Live Syncing...</span>
+        <span class="col-meta">Auto-sync 500 Agents</span>
       </div>
       <div class="status-col">
-        <span class="col-label">Query Speed</span>
-        <span class="col-value" style="color:var(--primary);">⚡ 1.2 ms</span>
-        <span class="col-sub">84.2% Cache Hit Ratio</span>
+        <span class="col-title">Query Retrieval Latency</span>
+        <span class="col-data" style="color:var(--brand-sky);">⚡ 1.2 ms</span>
+        <span class="col-meta">84.2% Cache Hit Ratio</span>
       </div>
     </div>
 
     <!-- Downloads Section -->
     <section id="download">
       <div class="section-head">
-        <span class="section-badge">Desktop Installers</span>
-        <h2 class="section-title">Download Floating Desktop App</h2>
-        <p class="section-desc">Install once on agent PCs. Automatically links to your central AWS database.</p>
+        <span class="badge-pill">Official Setup</span>
+        <h2 class="section-title">Download Vastu Vihar Floating Desktop App</h2>
+        <p class="section-desc">Install once on agent PCs. Automatically links to Vastu Vihar central AWS database.</p>
       </div>
 
-      <div class="downloads-container">
+      <div class="downloads-grid">
         <!-- Windows Card -->
         <div class="dl-card dl-card-featured">
-          <div class="card-ribbon">Recommended</div>
+          <div class="featured-ribbon">Recommended</div>
           <div>
-            <div class="dl-header">
-              <div class="os-avatar" style="color:#0284c7; background:#e0f2fe;">
+            <div class="dl-top-row">
+              <div class="os-avatar">
                 <svg viewBox="0 0 88 88">
                   <path d="M0 12.4l35.8-4.9v35H0V12.4zm0 34.6h35.8v35L0 77.1V47zm39.8-27.7L88 12.4v30.1H39.8V19.3zm0 27.7H88v30.1l-48.2-6.9V47z"/>
                 </svg>
               </div>
               <div>
-                <div class="dl-title">Windows Edition</div>
-                <div class="dl-specs">Windows 10 / 11 (64-bit) • `.exe` One-Click Setup</div>
+                <div class="dl-name">Windows Edition</div>
+                <div class="dl-version">Windows 10 / 11 (64-bit) • `.exe` One-Click Setup</div>
               </div>
             </div>
-            <ul class="dl-checklist">
+            <ul class="dl-features">
               <li>
-                <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                Always-on-top circular draggable chat bubble
+                <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                Always-on-top circular draggable floating bubble
               </li>
               <li>
-                <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                 Global Hotkey: <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd>
               </li>
               <li>
-                <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                One-click installer with automatic desktop shortcut
+                <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                Auto desktop shortcut for all 500 agents
               </li>
               <li>
-                <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                Locked Agent Mode (Zero distraction, no setting clutter)
+                <div class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                Locked Agent Mode (Zero distraction, direct answers)
               </li>
             </ul>
           </div>
           <div>
-            <a href="https://github.com/kumaranujranchi/vv-callcenterbot/actions" target="_blank" class="btn-dl-primary">
+            <a href="https://github.com/kumaranujranchi/vv-callcenterbot/actions" target="_blank" class="btn-download-red">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               Download Windows Installer (.exe)
             </a>
@@ -705,38 +784,38 @@
         <!-- Mac Card -->
         <div class="dl-card">
           <div>
-            <div class="dl-header">
-              <div class="os-avatar" style="color:#1e293b; background:#f1f5f9;">
+            <div class="dl-top-row">
+              <div class="os-avatar os-avatar-mac">
                 <svg viewBox="0 0 170 170">
                   <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.35.13-9.16-1.9-14.42-6.08-3.69-3.08-7.78-8.11-12.28-15.09-6.66-10.37-11.89-21.84-15.69-34.42-3.8-12.58-5.7-24.32-5.7-35.22 0-14.73 3.65-27.13 10.95-37.21 7.3-10.08 16.66-15.22 28.08-15.43 4.9.11 10.28 1.48 16.14 4.12 5.86 2.64 9.47 4.02 10.83 4.13 1.8-.22 5.61-1.68 11.43-4.38 5.82-2.7 11.29-3.99 16.41-3.88 12.37.54 22.37 5.14 30.01 13.8-10.82 6.55-16.11 15.54-15.86 26.96.25 9.07 3.75 16.8 10.5 23.2 6.75 6.4 14.72 10.07 23.91 11-2.43 7.55-5.59 15.11-9.48 22.68zm-34.82-124.6c.11 1.41-.12 3.12-.69 5.13-.57 2.01-1.57 4.15-3 6.42-1.85 2.83-4.14 5.34-6.87 7.53-2.73 2.19-5.46 3.73-8.19 4.62-.33-1.63-.44-3.26-.33-4.9.11-1.64.63-3.66 1.56-6.06 1.52-3.8 3.86-7.07 7.02-9.82 3.16-2.75 6.67-4.48 10.5-5.2z"/>
                 </svg>
               </div>
               <div>
-                <div class="dl-title">macOS Edition</div>
-                <div class="dl-specs">Apple Silicon &amp; Intel • Native `.app` Bundle</div>
+                <div class="dl-name">macOS Edition</div>
+                <div class="dl-version">Apple Silicon &amp; Intel • Native `.app` Bundle</div>
               </div>
             </div>
-            <ul class="dl-checklist">
+            <ul class="dl-features">
               <li>
-                <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                Frameless glassmorphic floating desktop card
+                <div class="check-box" style="background:rgba(28,43,89,0.1); color:var(--brand-navy);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                Frameless floating desktop copilot
               </li>
               <li>
-                <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                <div class="check-box" style="background:rgba(28,43,89,0.1); color:var(--brand-navy);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                 Global Hotkey: <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd>
               </li>
               <li>
-                <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                <div class="check-box" style="background:rgba(28,43,89,0.1); color:var(--brand-navy);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                 Sub-second live answers from Central Server
               </li>
               <li>
-                <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                100% lightweight native performance
+                <div class="check-box" style="background:rgba(28,43,89,0.1); color:var(--brand-navy);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                Auto-syncs with Vastu Vihar Central DB
               </li>
             </ul>
           </div>
           <div>
-            <a href="https://github.com/kumaranujranchi/vv-callcenterbot" target="_blank" class="btn-dl-primary btn-dl-outline">
+            <a href="https://github.com/kumaranujranchi/vv-callcenterbot" target="_blank" class="btn-download-navy">
               <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               Download for macOS (.app)
             </a>
@@ -748,28 +827,28 @@
     <!-- How Agents Use It -->
     <section class="steps-section">
       <div class="section-head">
-        <span class="section-badge">Workflow</span>
+        <span class="badge-pill">Workflow</span>
         <h2 class="section-title">How Call Center Agents Use It</h2>
-        <p class="section-desc">Designed for high-speed live customer calls with zero agent training required.</p>
+        <p class="section-desc">Live customer call ke dauraan zero distraction ke sath accurate resolution.</p>
       </div>
 
-      <div class="steps-row">
-        <div class="step-box">
-          <div class="step-badge">1</div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number-box">1</div>
           <h3>Always Floating on Screen</h3>
           <p>
             Agent apne CRM, dialer ya ticketing software par call attend karte hain. Widget screen ke side me floating rehta hai bina kaam disturb kiye.
           </p>
         </div>
-        <div class="step-box">
-          <div class="step-badge">2</div>
+        <div class="step-card">
+          <div class="step-number-box">2</div>
           <h3>Instant Query or Shortcut</h3>
           <p>
             Bubble par click karein ya <kbd>Ctrl+Shift+Space</kbd> dabayein. Customer ka sawal type karte hi sub-second mein bullet steps mil jaate hain.
           </p>
         </div>
-        <div class="step-box">
-          <div class="step-badge">3</div>
+        <div class="step-card">
+          <div class="step-number-box">3</div>
           <h3>One-Click "Copy Script"</h3>
           <p>
             Har response ke niche <strong>"Copy Script"</strong> button hota hai. Click karte hi customer ko bolne ya live chat mein paste karne wala script copy ho jata hai.
@@ -778,32 +857,32 @@
       </div>
     </section>
 
-    <!-- Interactive Live Test (Light Theme) -->
+    <!-- Interactive Live Test -->
     <section class="test-box">
       <div class="section-head" style="margin-bottom:16px;">
-        <span class="section-badge">Interactive Test</span>
-        <h2 class="section-title" style="font-size:24px;">Test Central Knowledge Base</h2>
-        <p class="section-desc">Aap yahin se check kar sakte hain ki central server kitni speed se accurate answers return karta hai.</p>
+        <span class="badge-pill">Interactive Live Test</span>
+        <h2 class="section-title" style="font-size:24px;">Test Vastu Vihar Central Knowledge Base</h2>
+        <p class="section-desc">Check how fast and accurately the central server returns verified answers.</p>
       </div>
 
       <form id="demo-form" class="test-form">
-        <input type="text" id="demo-query" class="test-input" placeholder="e.g. router red light fix, return policy..." value="Customer ka router red light blink kar raha hai kya karein?" />
+        <input type="text" id="demo-query" class="test-input" placeholder="e.g. router red light fix, return policy, pricing..." value="Customer ka router red light blink kar raha hai kya karein?" />
         <button type="submit" class="btn-test-action">⚡ Ask Copilot</button>
       </form>
 
       <div class="test-output" id="demo-result">
-        Click <strong>Ask Copilot</strong> to test live sub-second response speed...
+        Click <strong>⚡ Ask Copilot</strong> to test live sub-second response speed...
       </div>
     </section>
 
     <!-- Footer -->
     <footer>
       <div>
-        <strong>Call Center AI Copilot Platform</strong> • Enterprise 500-Agent Architecture
+        <span class="footer-brand">Vastu Vihar</span> • Call Center AI Support • <strong style="color:var(--brand-dark-red);">Powered By Team Marketing</strong>
       </div>
       <div>
-        <a href="https://github.com/kumaranujranchi/vv-callcenterbot" target="_blank" style="color:var(--primary); text-decoration:none; margin-right:20px; font-weight:600;">GitHub Repository</a>
-        <a href="/admin" style="color:var(--text-muted); text-decoration:none; font-weight:600;">Admin Login</a>
+        <a href="https://github.com/kumaranujranchi/vv-callcenterbot" target="_blank" style="color:var(--brand-sky); text-decoration:none; margin-right:20px; font-weight:700;">GitHub Repository</a>
+        <a href="/admin" style="color:var(--brand-navy); text-decoration:none; font-weight:700;">Master Admin Center</a>
       </div>
     </footer>
   </div>
@@ -841,7 +920,7 @@
       const resultBox = document.getElementById('demo-result');
       if (!q) return;
 
-      resultBox.innerHTML = '<span style="color:#4f46e5; font-weight:600;">Searching Central Knowledge Base...</span>';
+      resultBox.innerHTML = '<span style="color:#BF2A37; font-weight:700;">Searching Vastu Vihar Central Knowledge Base...</span>';
       const start = performance.now();
 
       try {
@@ -855,12 +934,12 @@
 
         let html = `<div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:12px; color:#64748b; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">
           <span>⚡ Response Time: <strong style="color:#059669;">${data.latencyMs || latency}ms</strong> ${data.isCached ? '(Cached)' : ''}</span>
-          <span>Source: <strong>${data.sources && data.sources[0] ? data.sources[0].source : 'Knowledge Base'}</strong></span>
+          <span>Source: <strong style="color:#1C2B59;">${data.sources && data.sources[0] ? data.sources[0].source : 'Knowledge Base'}</strong></span>
         </div>`;
         html += `<div style="white-space:pre-wrap; line-height:1.6; color:#1e293b;">${escapeHtml(data.answer)}</div>`;
         resultBox.innerHTML = html;
       } catch (err) {
-        resultBox.innerHTML = `<span style="color:#dc2626;">Error: ${err.message}</span>`;
+        resultBox.innerHTML = `<span style="color:#F23545;">Error: ${err.message}</span>`;
       }
     });
 

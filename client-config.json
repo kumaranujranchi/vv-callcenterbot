@@ -1,6 +1,6 @@
 {
-  "serverUrl": "http://localhost:3847",
-  "appName": "Call Center AI Copilot",
+  "serverUrl": "http://localhost:3847/?mode=agent",
+  "appName": "Vastu Vihar - Call Center AI Support - Powered By Team Marketing",
   "hotkey": "CommandOrControl+Shift+Space",
   "agentOnlyMode": true
 }
