@@ -442,11 +442,142 @@
       z-index: 9999;
     }
 
-    .hidden { display: none; }
+    /* Upload Tabs & Dropzone */
+    .upload-tab-nav {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+      background: var(--brand-light);
+      padding: 4px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+    .upload-tab-btn {
+      flex: 1;
+      padding: 9px 12px;
+      font-size: 12px;
+      font-weight: 800;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: all 0.2s;
+    }
+
+    .upload-tab-btn:hover {
+      color: var(--brand-navy);
+    }
+
+    .upload-tab-btn.active {
+      background: #ffffff;
+      color: var(--brand-dark-red);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .dropzone-box {
+      border: 2px dashed #94a3b8;
+      border-radius: var(--radius-lg);
+      padding: 24px 18px;
+      text-align: center;
+      background: #f8fafc;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .dropzone-box:hover, .dropzone-box.drag-over {
+      border-color: var(--brand-red);
+      background: rgba(242, 53, 69, 0.04);
+      transform: translateY(-1px);
+    }
+
+    .dropzone-icon {
+      width: 46px;
+      height: 46px;
+      margin: 0 auto 10px;
+      color: var(--brand-red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(242, 53, 69, 0.15);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .dropzone-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--brand-navy);
+      margin-bottom: 4px;
+    }
+
+    .dropzone-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .selected-file-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-left: 4px solid var(--brand-red);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      margin-top: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .selected-file-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      overflow: hidden;
+    }
+
+    .selected-file-icon {
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+
+    .selected-file-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--brand-navy);
+      word-break: break-all;
+    }
+
+    .selected-file-size {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .upload-progress {
+      width: 100%;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 12px;
+      display: none;
+    }
+
+    .upload-progress-fill {
+      width: 0%;
+      height: 100%;
+      background: var(--gradient-red);
+      transition: width 0.3s ease;
     }
   </style>
 </head>
@@ -516,18 +647,76 @@
           <!-- Populated by JS -->
         </div>
 
-        <form id="add-doc-form">
-          <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 12px; color:var(--brand-navy);">+ Add New Vastu Vihar Guide / Pricing</h3>
-          <div class="form-group">
-            <label>Filename (e.g. township_pricing_2026.md):</label>
-            <input type="text" id="doc-filename" required placeholder="Enter filename with .md, .txt, or .csv" />
+        <div class="upload-section-container">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <h3 style="font-size: 15px; font-weight: 800; color:var(--brand-navy); margin: 0;">+ Add Training Knowledge / Docs</h3>
+            <span style="font-size:10.5px; font-weight:800; color:var(--brand-dark-red); background:#fee2e2; padding:3px 8px; border-radius:6px; letter-spacing: 0.03em;">BROADCASTS TO 500 AGENTS</span>
           </div>
-          <div class="form-group">
-            <label>Content / Customer Scripts / Policies:</label>
-            <textarea id="doc-content" rows="6" required placeholder="Paste full product details, pricing, FAQs, booking guidelines, or call center scripts here..."></textarea>
+
+          <!-- Switch Tabs -->
+          <div class="upload-tab-nav">
+            <button type="button" class="upload-tab-btn active" id="tab-btn-file" onclick="switchUploadTab('file')">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+              Upload Document File (PDF / Word / TXT / CSV)
+            </button>
+            <button type="button" class="upload-tab-btn" id="tab-btn-text" onclick="switchUploadTab('text')">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              Manual Text Entry
+            </button>
           </div>
-          <button type="submit" class="btn-submit">Upload &amp; Broadcast to 500 Agents</button>
-        </form>
+
+          <!-- TAB 1: FILE UPLOAD (DEFAULT) -->
+          <div id="tab-content-file">
+            <input type="file" id="file-picker" accept=".pdf,.docx,.doc,.txt,.md,.csv,.json" style="display: none;" onchange="handleFileSelect(event)" />
+            
+            <div class="dropzone-box" id="dropzone" onclick="document.getElementById('file-picker').click()">
+              <div class="dropzone-icon">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <div class="dropzone-title">Click to Browse Document or Drag &amp; Drop here</div>
+              <div class="dropzone-subtitle">Supported: PDF (.pdf), Word (.docx), Text (.txt), Markdown (.md), CSV (.csv)</div>
+            </div>
+
+            <!-- Selected File Card (hidden until chosen) -->
+            <div id="selected-file-card" class="selected-file-card" style="display: none;">
+              <div class="selected-file-info">
+                <span class="selected-file-icon" id="file-icon">📄</span>
+                <div>
+                  <div class="selected-file-name" id="file-name">filename.pdf</div>
+                  <div class="selected-file-size" id="file-size">0 KB</div>
+                </div>
+              </div>
+              <button type="button" class="btn-del" onclick="clearSelectedFile(event)">Remove</button>
+            </div>
+
+            <div class="upload-progress" id="upload-progress">
+              <div class="upload-progress-fill" id="upload-progress-fill"></div>
+            </div>
+
+            <button type="button" id="btn-upload-file" class="btn-submit" style="margin-top: 14px;" onclick="uploadSelectedFile()">
+              Upload Document &amp; Broadcast to 500 Agents
+            </button>
+          </div>
+
+          <!-- TAB 2: MANUAL TEXT PASTE -->
+          <div id="tab-content-text" style="display: none;">
+            <form id="add-doc-form">
+              <div class="form-group">
+                <label>Filename (e.g. township_pricing_2026.md):</label>
+                <input type="text" id="doc-filename" placeholder="Enter filename with .md, .txt, or .csv" />
+              </div>
+              <div class="form-group">
+                <label>Content / Customer Scripts / Policies:</label>
+                <textarea id="doc-content" rows="5" placeholder="Paste full product details, pricing, FAQs, booking guidelines, or call center scripts here..."></textarea>
+              </div>
+              <button type="submit" class="btn-submit">Upload &amp; Broadcast to 500 Agents</button>
+            </form>
+          </div>
+        </div>
       </div>
 
       <!-- Right: Central AI Engine & Agent Config -->
@@ -609,10 +798,183 @@
       }
     }
 
+    let selectedFile = null;
+
+    function switchUploadTab(tab) {
+      const fileTab = document.getElementById('tab-content-file');
+      const textTab = document.getElementById('tab-content-text');
+      const fileBtn = document.getElementById('tab-btn-file');
+      const textBtn = document.getElementById('tab-btn-text');
+
+      if (tab === 'file') {
+        fileTab.style.display = 'block';
+        textTab.style.display = 'none';
+        fileBtn.classList.add('active');
+        textBtn.classList.remove('active');
+      } else {
+        fileTab.style.display = 'none';
+        textTab.style.display = 'block';
+        fileBtn.classList.remove('active');
+        textBtn.classList.add('active');
+      }
+    }
+
+    // Drag and Drop Events
+    const dropzone = document.getElementById('dropzone');
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.add('drag-over');
+      }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropzone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropzone.classList.remove('drag-over');
+      }, false);
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      if (files && files.length > 0) {
+        processSelectedFile(files[0]);
+      }
+    });
+
+    function handleFileSelect(event) {
+      const files = event.target.files;
+      if (files && files.length > 0) {
+        processSelectedFile(files[0]);
+      }
+    }
+
+    function processSelectedFile(file) {
+      selectedFile = file;
+      document.getElementById('file-name').textContent = file.name;
+      
+      const sizeKb = Math.round(file.size / 1024);
+      const sizeStr = sizeKb > 1024 ? `${(sizeKb / 1024).toFixed(1)} MB` : `${sizeKb} KB`;
+      document.getElementById('file-size').textContent = sizeStr;
+
+      // Icon
+      const ext = file.name.split('.').pop().toLowerCase();
+      let icon = '📄';
+      if (ext === 'pdf') icon = '📕';
+      else if (ext === 'docx' || ext === 'doc') icon = '📘';
+      else if (ext === 'csv' || ext === 'xlsx') icon = '📊';
+      else if (ext === 'md') icon = '📝';
+      document.getElementById('file-icon').textContent = icon;
+
+      document.getElementById('selected-file-card').style.display = 'flex';
+      document.getElementById('btn-upload-file').textContent = `🚀 Upload "${file.name}" & Broadcast`;
+    }
+
+    function clearSelectedFile(event) {
+      if (event) event.stopPropagation();
+      selectedFile = null;
+      document.getElementById('file-picker').value = '';
+      document.getElementById('selected-file-card').style.display = 'none';
+      document.getElementById('btn-upload-file').textContent = 'Upload Document & Broadcast to 500 Agents';
+      document.getElementById('upload-progress').style.display = 'none';
+      document.getElementById('upload-progress-fill').style.width = '0%';
+    }
+
+    async function uploadSelectedFile() {
+      if (!selectedFile) {
+        document.getElementById('file-picker').click();
+        return;
+      }
+
+      const btn = document.getElementById('btn-upload-file');
+      const progress = document.getElementById('upload-progress');
+      const progressFill = document.getElementById('upload-progress-fill');
+
+      btn.disabled = true;
+      btn.textContent = '⏳ Reading & Preparing Document...';
+      progress.style.display = 'block';
+      progressFill.style.width = '30%';
+
+      try {
+        const ext = selectedFile.name.split('.').pop().toLowerCase();
+        const isBinary = ['pdf', 'docx', 'doc', 'zip'].includes(ext);
+
+        const reader = new FileReader();
+
+        reader.onload = async function(e) {
+          progressFill.style.width = '70%';
+          btn.textContent = '⚡ Indexing Chunks into AI Vector Engine...';
+
+          let payload = {};
+          if (isBinary) {
+            const base64Data = e.target.result.split(',')[1];
+            payload = {
+              filename: selectedFile.name,
+              content: base64Data,
+              isBase64: true
+            };
+          } else {
+            payload = {
+              filename: selectedFile.name,
+              content: e.target.result,
+              isBase64: false
+            };
+          }
+
+          try {
+            const res = await fetch('/api/knowledge/upload', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+            const result = await res.json();
+
+            if (result.success) {
+              progressFill.style.width = '100%';
+              showToast(`✅ "${selectedFile.name}" indexed and broadcasted to 500 agents!`);
+              setTimeout(() => {
+                clearSelectedFile();
+                loadData();
+              }, 800);
+            } else {
+              alert('Upload failed: ' + (result.error || 'Unknown error'));
+            }
+          } catch (netErr) {
+            alert('Server error during upload: ' + netErr.message);
+          } finally {
+            btn.disabled = false;
+          }
+        };
+
+        if (isBinary) {
+          reader.readAsDataURL(selectedFile);
+        } else {
+          reader.readAsText(selectedFile);
+        }
+
+      } catch (err) {
+        alert('File read error: ' + err.message);
+        btn.disabled = false;
+        btn.textContent = 'Upload Document & Broadcast to 500 Agents';
+      }
+    }
+
     document.getElementById('add-doc-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const filename = document.getElementById('doc-filename').value.trim();
       const content = document.getElementById('doc-content').value.trim();
+
+      if (!filename) {
+        alert('Please enter a filename.');
+        return;
+      }
+      if (!content) {
+        alert('Please enter content or customer policies.');
+        return;
+      }
 
       try {
         const res = await fetch('/api/knowledge', {

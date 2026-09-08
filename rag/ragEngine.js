@@ -63,12 +63,23 @@ class RAGEngine {
       try {
         if (ext === '.pdf') {
           try {
-            const pdfParse = require('pdf-parse');
+            const { PDFParse } = require('pdf-parse');
             const dataBuffer = fs.readFileSync(filePath);
-            const data = await pdfParse(dataBuffer);
-            text = data.text;
+            const parser = new PDFParse({ data: dataBuffer });
+            const data = await parser.getText();
+            text = data.text || '';
+            await parser.destroy();
           } catch (pdfErr) {
             console.warn(`PDF parse skipped for ${file}:`, pdfErr.message);
+          }
+        } else if (ext === '.docx' || ext === '.doc') {
+          try {
+            const mammoth = require('mammoth');
+            const dataBuffer = fs.readFileSync(filePath);
+            const data = await mammoth.extractRawText({ buffer: dataBuffer });
+            text = data.value || '';
+          } catch (docErr) {
+            console.warn(`DOCX parse skipped for ${file}:`, docErr.message);
           }
         } else if (['.txt', '.md', '.csv', '.json'].includes(ext)) {
           text = fs.readFileSync(filePath, 'utf8');
@@ -297,9 +308,17 @@ ${query}`;
     return formatted;
   }
 
-  async addDocument(filename, content) {
+  async addDocument(filename, content, isBinary = false) {
     const filePath = path.join(this.knowledgeDir, filename);
-    fs.writeFileSync(filePath, content, 'utf8');
+    if (isBinary) {
+      if (typeof content === 'string') {
+        fs.writeFileSync(filePath, Buffer.from(content, 'base64'));
+      } else if (Buffer.isBuffer(content)) {
+        fs.writeFileSync(filePath, content);
+      }
+    } else {
+      fs.writeFileSync(filePath, content, 'utf8');
+    }
     await this.indexDocuments();
     return true;
   }

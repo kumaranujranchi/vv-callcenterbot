@@ -13,8 +13,8 @@ const configPath = path.join(__dirname, 'config.json');
 const rag = new RAGEngine(knowledgeDir, configPath);
 
 app.use(cors());
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Initialize RAG indexing
@@ -44,15 +44,15 @@ app.post('/api/query', async (req, res) => {
     return res.status(400).json({ error: 'Query cannot be empty' });
   }
 
-  const normalizedQuery = query.trim().toLowerCase();
   totalQueries++;
+  const cacheKey = query.trim().toLowerCase();
 
-  // Check cache for identical queries from agents
-  if (queryCache.has(normalizedQuery)) {
+  // Cache Check: Sub-second instantaneous response
+  if (queryCache.has(cacheKey)) {
     cacheHits++;
-    const cachedResult = queryCache.get(normalizedQuery);
+    const cached = queryCache.get(cacheKey);
     return res.json({
-      ...cachedResult,
+      ...cached,
       isCached: true,
       latencyMs: 1
     });
@@ -60,23 +60,20 @@ app.post('/api/query', async (req, res) => {
 
   try {
     const result = await rag.answerQuery(query.trim());
-    // Cache the result for 15 minutes
-    queryCache.set(normalizedQuery, result);
+    queryCache.set(cacheKey, result);
     if (queryCache.size > 5000) {
-      // Evict oldest
       const firstKey = queryCache.keys().next().value;
       queryCache.delete(firstKey);
     }
-
     res.json(result);
   } catch (err) {
-    console.error('Error answering query:', err);
+    console.error('Error handling query:', err);
     res.status(500).json({ error: err.message });
   }
 });
 
-// Admin Stats
-app.get('/api/admin/stats', (req, res) => {
+// Admin Cache & Stats endpoint
+app.get('/api/stats', (req, res) => {
   res.json({
     totalQueries,
     cacheHits,
@@ -90,19 +87,39 @@ app.get('/api/knowledge', (req, res) => {
   res.json(rag.getKnowledgeList());
 });
 
-// Upload or add a new knowledge doc
+// Upload or add a new knowledge doc (supports both raw text and base64 binaries like PDF/DOCX)
 app.post('/api/knowledge', async (req, res) => {
-  const { filename, content } = req.body;
+  const { filename, content, isBase64 } = req.body;
   if (!filename || !content) {
     return res.status(400).json({ error: 'Filename and content are required' });
   }
 
   try {
     const cleanName = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
-    await rag.addDocument(cleanName, content);
-    res.json({ success: true, message: `File ${cleanName} added and re-indexed.` });
+    await rag.addDocument(cleanName, content, !!isBase64);
+    // Invalidate query cache so all 500 agents get updated answers immediately
+    queryCache.clear();
+    res.json({ success: true, message: `File ${cleanName} added and re-indexed across all 500 agents.` });
   } catch (err) {
     console.error('Error adding knowledge:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Dedicated file upload endpoint
+app.post('/api/knowledge/upload', async (req, res) => {
+  const { filename, content, isBase64 } = req.body;
+  if (!filename || !content) {
+    return res.status(400).json({ error: 'Filename and file content are required' });
+  }
+
+  try {
+    const cleanName = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+    await rag.addDocument(cleanName, content, !!isBase64);
+    queryCache.clear();
+    res.json({ success: true, message: `Document ${cleanName} uploaded and indexed successfully.` });
+  } catch (err) {
+    console.error('Error in document upload:', err);
     res.status(500).json({ error: err.message });
   }
 });
