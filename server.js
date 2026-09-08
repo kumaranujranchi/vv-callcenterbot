@@ -32,6 +32,11 @@ app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
+// Official Portal & Download Hub Route
+app.get(['/portal', '/download', '/downloads'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'portal.html'));
+});
+
 // Query Knowledge Base (with High-Speed Cache for 500 agents)
 app.post('/api/query', async (req, res) => {
   const { query } = req.body;
