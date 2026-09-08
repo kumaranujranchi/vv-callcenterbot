@@ -32,12 +32,14 @@
   "author": "",
   "license": "ISC",
   "description": "",
-  "devDependencies": {
+  "dependencies": {
     "cors": "^2.8.6",
-    "electron": "^41.7.1",
-    "electron-builder": "^26.15.3",
-    "electron-packager": "^17.1.2",
     "express": "^5.2.1",
     "pdf-parse": "^2.4.5"
+  },
+  "devDependencies": {
+    "electron": "^41.7.1",
+    "electron-builder": "^26.15.3",
+    "electron-packager": "^17.1.2"
   }
 }
