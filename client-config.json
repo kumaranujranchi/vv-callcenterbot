@@ -1,5 +1,5 @@
 {
-  "serverUrl": "http://13.214.56.111:3847/?mode=agent",
+  "serverUrl": "https://copilot.vastuvihar.org.in/?mode=agent",
   "appName": "Vastu Vihar - Call Center AI Support - Powered By Team Marketing",
   "hotkey": "CommandOrControl+Shift+Space",
   "agentOnlyMode": true
