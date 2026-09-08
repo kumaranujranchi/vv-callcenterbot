@@ -106,7 +106,7 @@ class RAGEngine {
     console.log(`[RAGEngine] Indexed ${this.documents.length} docs, ${this.chunks.length} total chunks.`);
   }
 
-  chunkText(text, filename, chunkSize = 500, overlap = 100) {
+  chunkText(text, filename, chunkSize = 1000, overlap = 150) {
     // Split by paragraphs / markdown headers first
     const sections = text.split(/\n(?=#{1,3}\s|\n\n)/g);
 
@@ -151,7 +151,7 @@ class RAGEngine {
       .filter(w => w.length > 1);
   }
 
-  search(query, topK = 4) {
+  search(query, topK = 8) {
     const queryTokens = this.tokenize(query);
     if (queryTokens.length === 0 || this.chunks.length === 0) {
       return [];
@@ -201,7 +201,7 @@ class RAGEngine {
 
   async answerQuery(query) {
     const startTime = Date.now();
-    const retrievedChunks = this.search(query, 4);
+    const retrievedChunks = this.search(query, 8);
 
     let answer = '';
     let usedAI = false;
@@ -241,52 +241,71 @@ class RAGEngine {
   }
 
   async callGeminiAPI(query, context) {
-    const systemPrompt = `You are a high-speed, accurate Real-Time AI Copilot for Call Center Agents / Customer Support Representatives.
-Your job is to read the customer support Knowledge Base provided in CONTEXT and answer the agent's question instantly.
+    const systemPrompt = `You are the Official Real-Time AI Copilot for Vastu Vihar Call Center & Customer Support Representatives.
+Your job is to assist the call center agent in answering the customer's question accurately, politely, and instantly using the Vastu Vihar knowledge base provided in CONTEXT below.
 
 CRITICAL GUIDELINES FOR CALL CENTER REPS:
-1. Be direct, clear, and actionable. The agent is on a live call with a customer!
-2. Provide a quick summary (1-2 sentences), followed by bullet points of exact steps, product policies, prices, or technical troubleshooting instructions.
-3. If applicable, provide a "What to say to customer" script snippet in quotes.
-4. Answer in the same language as the agent's query (English, Hindi, or Hinglish).
-5. If the knowledge base does not contain the information, state clearly: "Not found in knowledge base. Recommend escalating to Tier 2."
+1. Provide a direct, concise, and structured answer (bullet points) so the agent can quickly read it to the customer on a live call.
+2. Include exact details from the context (such as city/state locations, property types, pricing, amenities, booking process, customer care numbers).
+3. Always include a polite, conversational script snippet: "🗣️ What to say to customer: \"...\""
+4. Answer in the same language as the agent's query (Hindi, English, or Hinglish).
+5. If specific project availability or exact current price is not in context, provide the closest relevant details and advise that a site executive/relationship manager will confirm the exact unit details.
 
-CONTEXT FROM KNOWLEDGE BASE:
+CONTEXT FROM VASTU VIHAR KNOWLEDGE BASE:
 ${context || 'No specific document found.'}
 
-AGENT QUERY:
+CUSTOMER QUESTION ASKED TO AGENT:
 ${query}`;
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.config.model || 'gemini-1.5-flash'}:generateContent?key=${this.config.geminiApiKey}`;
+    // Prefer gemini-3.6-flash (current generation). Auto-migrate legacy models.
+    let selectedModel = this.config.model || 'gemini-3.6-flash';
+    if (['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash', 'gemini-flash-latest'].includes(selectedModel)) {
+      selectedModel = 'gemini-3.6-flash';
+    }
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [
-          {
-            role: 'user',
-            parts: [{ text: systemPrompt }]
-          }
-        ],
-        generationConfig: {
-          temperature: 0.2,
-          maxOutputTokens: 600
+    const candidateModels = [selectedModel, 'gemini-3.6-flash', 'gemini-3.7-flash'];
+    const uniqueModels = [...new Set(candidateModels)];
+
+    let lastError = null;
+
+    for (const model of uniqueModels) {
+      try {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${this.config.geminiApiKey}`;
+
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [
+              {
+                role: 'user',
+                parts: [{ text: systemPrompt }]
+              }
+            ],
+            generationConfig: {
+              temperature: 0.3,
+              maxOutputTokens: 2048
+            }
+          })
+        });
+
+        if (!response.ok) {
+          const errText = await response.text();
+          throw new Error(`Gemini API (${model}) returned ${response.status}: ${errText}`);
         }
-      })
-    });
 
-    if (!response.ok) {
-      const errText = await response.text();
-      throw new Error(`Gemini API returned ${response.status}: ${errText}`);
+        const data = await response.json();
+        const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (candidate && candidate.trim().length > 0) {
+          return candidate;
+        }
+      } catch (err) {
+        lastError = err;
+        console.warn(`Attempt with ${model} failed, trying next candidate...`, err.message);
+      }
     }
 
-    const data = await response.json();
-    const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!candidate) {
-      throw new Error('No response content returned by Gemini API');
-    }
-    return candidate;
+    throw lastError || new Error('No valid response from Gemini API');
   }
 
   synthesizeLocalAnswer(query, chunks) {
