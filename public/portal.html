@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vastu Vihar - Call Center AI Support - Powered By Team Marketing</title>
+  <link rel="icon" type="image/png" href="/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -84,26 +85,38 @@
     .nav-brand {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 16px;
       text-decoration: none;
     }
 
-    .brand-logo-box {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      background: var(--gradient-red);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 6px 18px rgba(242, 53, 69, 0.35);
-      color: #fff;
+    .brand-logo-img {
+      height: 52px;
+      width: auto;
+      object-fit: contain;
+      background: #ffffff;
+      padding: 3px 6px;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
     }
 
-    .brand-logo-box svg { width: 24px; height: 24px; }
+    .hero-logo-wrapper {
+      margin-bottom: 20px;
+    }
+
+    .hero-logo-img {
+      height: 90px;
+      width: auto;
+      object-fit: contain;
+      background: #ffffff;
+      padding: 8px 24px;
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-md);
+    }
 
     .brand-title-text {
-      font-size: 21px;
+      font-size: 22px;
       font-weight: 900;
       color: var(--brand-navy);
       letter-spacing: -0.02em;
@@ -666,9 +679,7 @@
     <!-- Navbar -->
     <nav>
       <a href="/portal" class="nav-brand">
-        <div class="brand-logo-box">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        </div>
+        <img src="/logo.png" alt="Vastu Vihar Official Logo" class="brand-logo-img">
         <div>
           <div class="brand-title-text">Vastu Vihar</div>
           <div class="brand-subtitle-tag">
@@ -690,6 +701,9 @@
 
     <!-- Hero Header -->
     <header class="hero">
+      <div class="hero-logo-wrapper">
+        <img src="/logo.png" alt="Vastu Vihar Township" class="hero-logo-img">
+      </div>
       <div class="hero-badge-pill">
         <div class="pulse-dot"></div>
         <span>VASTU VIHAR CENTRAL KNOWLEDGE BASE LIVE &amp; BROADCASTING</span>
