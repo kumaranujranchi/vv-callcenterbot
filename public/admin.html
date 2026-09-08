@@ -3,105 +3,244 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Command Center | 500-Agent Central Knowledge Base</title>
+  <title>Vastu Vihar - Master Admin Command Center | Powered By Team Marketing</title>
+  <link rel="icon" type="image/png" href="/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    /* VASTU VIHAR BRAND PALETTE */
     :root {
-      --bg-dark: #0f172a;
-      --bg-card: #1e293b;
-      --accent: #6366f1;
-      --accent-green: #10b981;
-      --accent-cyan: #06b6d4;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --border: rgba(255, 255, 255, 0.08);
-      --radius: 12px;
+      --brand-red: #F23545;
+      --brand-dark-red: #BF2A37;
+      --brand-navy: #1C2B59;
+      --brand-sky: #30A9D9;
+      --brand-light: #F2F2F2;
+      
+      --bg-surface: #ffffff;
+      --border-subtle: rgba(28, 43, 89, 0.12);
+      --border-focus: #30A9D9;
+      
+      --text-navy: #1C2B59;
+      --text-body: #334155;
+      --text-muted: #64748b;
+      
+      --gradient-red: linear-gradient(135deg, #F23545 0%, #BF2A37 100%);
+      --gradient-sky: linear-gradient(135deg, #30A9D9 0%, #0284c7 100%);
+      --gradient-navy: linear-gradient(135deg, #1C2B59 0%, #0f172a 100%);
+      
+      --shadow-sm: 0 2px 8px rgba(28, 43, 89, 0.05);
+      --shadow-md: 0 10px 30px -5px rgba(28, 43, 89, 0.08), 0 4px 12px -2px rgba(28, 43, 89, 0.04);
+      --shadow-lg: 0 20px 40px -10px rgba(242, 53, 69, 0.2), 0 8px 16px -4px rgba(28, 43, 89, 0.06);
+      
+      --radius-xl: 20px;
+      --radius-lg: 14px;
+      --radius-md: 10px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background: var(--bg-dark);
-      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--brand-light);
+      color: var(--text-body);
       min-height: 100vh;
-      padding: 24px;
+      overflow-x: hidden;
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(at 10% 10%, rgba(242, 53, 69, 0.05) 0px, transparent 45%),
+        radial-gradient(at 90% 15%, rgba(48, 169, 217, 0.08) 0px, transparent 45%),
+        radial-gradient(at 50% 90%, rgba(28, 43, 89, 0.04) 0px, transparent 50%);
+      background-attachment: fixed;
+      padding: 24px 0 64px;
+    }
+
+    /* Mesh pattern */
+    .bg-mesh-pattern {
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.55;
+      pointer-events: none;
+      z-index: 0;
     }
 
     .container {
-      max-width: 1100px;
+      max-width: 1140px;
       margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
     }
 
+    /* Header */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 28px;
     }
 
-    .header-left h1 {
-      font-size: 24px;
-      font-weight: 800;
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+    }
+
+    .brand-logo-img {
+      height: 54px;
+      width: auto;
+      object-fit: contain;
+      background: #ffffff;
+      padding: 4px 8px;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-title-box h1 {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--brand-navy);
       display: flex;
       align-items: center;
       gap: 10px;
+      line-height: 1.2;
     }
 
     .badge-admin {
-      background: rgba(99, 102, 241, 0.2);
-      color: var(--accent);
-      border: 1px solid var(--accent);
-      font-size: 11px;
-      font-weight: 700;
+      background: var(--brand-red);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
       padding: 3px 8px;
       border-radius: 6px;
+      text-transform: uppercase;
     }
 
     .subtitle {
       color: var(--text-muted);
-      font-size: 13px;
-      margin-top: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 3px;
     }
 
+    .tag-marketing {
+      color: var(--brand-sky);
+      font-weight: 800;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-top-portal {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      color: var(--brand-navy);
+      padding: 10px 18px;
+      border-radius: 9px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .btn-top-portal:hover {
+      background: #f8fafc;
+      border-color: var(--brand-sky);
+      color: var(--brand-sky);
+      transform: translateY(-1px);
+    }
+
+    .btn-sync {
+      background: var(--gradient-red);
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(242, 53, 69, 0.3);
+      transition: all 0.2s;
+    }
+
+    .btn-sync:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(242, 53, 69, 0.4);
+    }
+
+    /* Stats Grid */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
-      margin-bottom: 28px;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-top: 4px solid var(--brand-red);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 32px;
     }
 
-    .stat-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px;
+    @media (max-width: 800px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .stat-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 4px 8px;
+    }
+
+    .stat-col:not(:last-child) {
+      border-right: 1px solid var(--border-subtle);
+    }
+
+    @media (max-width: 800px) {
+      .stat-col:nth-child(2) { border-right: none; }
     }
 
     .stat-label {
+      font-size: 11px;
       color: var(--text-muted);
-      font-size: 12px;
-      font-weight: 600;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
     }
 
     .stat-value {
-      font-size: 26px;
-      font-weight: 800;
-      margin-top: 8px;
-      color: #fff;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--brand-navy);
+      line-height: 1.2;
     }
 
     .stat-meta {
-      font-size: 11px;
-      color: var(--accent-green);
-      margin-top: 4px;
+      font-size: 12px;
+      color: var(--brand-dark-red);
+      font-weight: 600;
     }
 
+    /* Main Dual Panels */
     .main-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -113,38 +252,41 @@
     }
 
     .panel-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+
+    .panel-card-accent::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 28px;
+      right: 28px;
+      height: 3px;
+      background: var(--gradient-red);
+      border-radius: 0 0 4px 4px;
     }
 
     .panel-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-subtle);
     }
 
     .panel-header h2 {
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    .btn-sync {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--brand-navy);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .doc-list {
@@ -153,142 +295,220 @@
       gap: 10px;
       max-height: 280px;
       overflow-y: auto;
-      margin-bottom: 16px;
+      margin-bottom: 22px;
     }
 
     .doc-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(15, 23, 42, 0.6);
-      padding: 10px 14px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
+      background: var(--brand-light);
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.2s;
+    }
+
+    .doc-item:hover {
+      border-color: var(--brand-sky);
+      background: #f8fafc;
     }
 
     .doc-name {
       font-size: 13px;
-      font-weight: 600;
-      color: #fff;
+      font-weight: 700;
+      color: var(--brand-navy);
     }
 
     .doc-meta {
       font-size: 11px;
       color: var(--text-muted);
+      margin-top: 2px;
     }
 
     .btn-del {
-      background: none;
-      border: none;
-      color: #ef4444;
+      background: rgba(242, 53, 69, 0.08);
+      border: 1px solid rgba(242, 53, 69, 0.2);
+      color: var(--brand-red);
       font-size: 12px;
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-del:hover {
+      background: var(--brand-red);
+      color: #fff;
     }
 
     .form-group {
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     label {
       display: block;
       font-size: 12px;
-      font-weight: 600;
-      color: var(--text-muted);
+      font-weight: 800;
+      color: var(--brand-navy);
       margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
     input, textarea, select {
       width: 100%;
-      background: #0f172a;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px 12px;
-      color: #fff;
+      background: var(--brand-light);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 11px 14px;
+      color: var(--brand-navy);
       font-size: 13px;
       font-family: inherit;
+      font-weight: 600;
       outline: none;
+      transition: all 0.2s;
     }
 
     input:focus, textarea:focus, select:focus {
-      border-color: var(--accent);
+      background: #ffffff;
+      border-color: var(--brand-sky);
+      box-shadow: 0 0 0 3px rgba(48, 169, 217, 0.2);
     }
 
     .btn-submit {
       width: 100%;
-      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      background: var(--gradient-red);
       border: none;
       color: #fff;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: 700;
+      padding: 13px;
+      border-radius: var(--radius-md);
+      font-weight: 800;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 14px;
+      box-shadow: 0 4px 14px rgba(242, 53, 69, 0.3);
+      transition: all 0.2s;
     }
 
-    .btn-submit:hover { opacity: 0.9; }
+    .btn-submit:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    .btn-submit-navy {
+      background: var(--brand-navy);
+      box-shadow: 0 4px 14px rgba(28, 43, 89, 0.25);
+    }
+
+    .btn-submit-navy:hover {
+      background: #152248;
+    }
+
+    .installer-box {
+      background: var(--brand-light);
+      border: 1px solid var(--border-subtle);
+      padding: 14px;
+      border-radius: var(--radius-md);
+      margin-top: 4px;
+    }
+
+    .installer-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--brand-dark-red);
+      font-weight: 700;
+      background: #ffffff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+      display: block;
+      margin: 8px 0;
+    }
 
     .toast {
       position: fixed;
       bottom: 24px;
       right: 24px;
-      background: var(--accent-green);
+      background: var(--brand-navy);
       color: #fff;
-      padding: 10px 18px;
+      border-left: 4px solid var(--brand-red);
+      padding: 12px 20px;
       border-radius: 8px;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 13px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
       animation: fadeIn 0.2s;
+      z-index: 9999;
     }
 
     .hidden { display: none; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
 
+  <div class="bg-mesh-pattern"></div>
+
   <div class="container">
+    <!-- Header -->
     <header>
-      <div class="header-left">
-        <h1>Central Knowledge Command Center <span class="badge-admin">MASTER ADMIN</span></h1>
-        <p class="subtitle">500 Call Center Agents connected to this single database instance</p>
+      <div class="header-brand">
+        <img src="/logo.png" alt="Vastu Vihar Official Logo" class="brand-logo-img">
+        <div class="header-title-box">
+          <h1>
+            Master Admin Command Center 
+            <span class="badge-admin">MASTER</span>
+          </h1>
+          <p class="subtitle">
+            Vastu Vihar • Call Center AI Support • <span class="tag-marketing">POWERED BY TEAM MARKETING</span> • 500 Terminals
+          </p>
+        </div>
       </div>
-      <div>
+      <div class="header-actions">
+        <a href="/portal" class="btn-top-portal">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+          View Landing Portal
+        </a>
         <button class="btn-sync" onclick="syncAllAgents()">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
           Sync All 500 Agents
         </button>
       </div>
     </header>
 
-    <!-- Stats for Manager -->
+    <!-- Stats Bar (Light & Elevated) -->
     <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-label">Connected Agent Terminals</div>
-        <div class="stat-value" id="stat-agents">500</div>
-        <div class="stat-meta">🟢 Live Desktop Widgets Active</div>
+      <div class="stat-col">
+        <span class="stat-label">Connected Agent Terminals</span>
+        <span class="stat-value" id="stat-agents">500</span>
+        <span class="stat-meta">🟢 Live Desktop Widgets Active</span>
       </div>
-      <div class="stat-card">
-        <div class="stat-label">Active Knowledge Documents</div>
-        <div class="stat-value" id="stat-docs">-</div>
-        <div class="stat-meta" id="stat-chunks">- chunks indexed</div>
+      <div class="stat-col">
+        <span class="stat-label">Active Knowledge Documents</span>
+        <span class="stat-value" id="stat-docs">-</span>
+        <span class="stat-meta" id="stat-chunks">- chunks indexed</span>
       </div>
-      <div class="stat-card">
-        <div class="stat-label">Total Agent Queries Handled</div>
-        <div class="stat-value" id="stat-queries">1,428</div>
-        <div class="stat-meta">⚡ Sub-second response time</div>
+      <div class="stat-col">
+        <span class="stat-label">Total Agent Queries Handled</span>
+        <span class="stat-value" id="stat-queries">1,428</span>
+        <span class="stat-meta" style="color:var(--brand-sky);">⚡ Sub-second response time</span>
       </div>
-      <div class="stat-card">
-        <div class="stat-label">Query Cache Hit Ratio</div>
-        <div class="stat-value" id="stat-cache">84.2%</div>
-        <div class="stat-meta">💡 Zero LLM cost on repeat queries</div>
+      <div class="stat-col">
+        <span class="stat-label">Query Cache Hit Ratio</span>
+        <span class="stat-value" id="stat-cache">84.2%</span>
+        <span class="stat-meta" style="color:var(--brand-sky);">💡 Zero LLM cost on repeat queries</span>
       </div>
     </div>
 
     <!-- Main Content -->
     <div class="main-grid">
-      <!-- Left: Document List & Upload -->
-      <div class="panel-card">
+      <!-- Left: Central Knowledge Base Files & Upload -->
+      <div class="panel-card panel-card-accent">
         <div class="panel-header">
           <h2>📄 Central Knowledge Base Files</h2>
         </div>
@@ -297,54 +517,54 @@
         </div>
 
         <form id="add-doc-form">
-          <h3 style="font-size: 14px; margin-bottom: 10px; color:#fff;">+ Add New Product Guide / Policy</h3>
+          <h3 style="font-size: 15px; font-weight: 800; margin-bottom: 12px; color:var(--brand-navy);">+ Add New Vastu Vihar Guide / Pricing</h3>
           <div class="form-group">
-            <label>Filename (e.g. telecom_pricing_2026.md):</label>
+            <label>Filename (e.g. township_pricing_2026.md):</label>
             <input type="text" id="doc-filename" required placeholder="Enter filename with .md, .txt, or .csv" />
           </div>
           <div class="form-group">
-            <label>Content / Script / Pricing:</label>
-            <textarea id="doc-content" rows="6" required placeholder="Paste full product guidelines, customer scripts, troubleshooting steps..."></textarea>
+            <label>Content / Customer Scripts / Policies:</label>
+            <textarea id="doc-content" rows="6" required placeholder="Paste full product details, pricing, FAQs, booking guidelines, or call center scripts here..."></textarea>
           </div>
-          <button type="submit" class="btn-submit">Upload & Broadcast to 500 Agents</button>
+          <button type="submit" class="btn-submit">Upload &amp; Broadcast to 500 Agents</button>
         </form>
       </div>
 
       <!-- Right: Central AI Engine & Agent Config -->
-      <div class="panel-card">
+      <div class="panel-card panel-card-accent">
         <div class="panel-header">
-          <h2>⚙️ Central AI & Agent Settings</h2>
+          <h2>⚙️ Central AI &amp; Agent Settings</h2>
         </div>
         <div class="form-group">
           <label>Google Gemini API Key (Centralized):</label>
           <input type="password" id="admin-gemini-key" placeholder="AIzaSy... (Shared across all 500 agents)" />
           <small style="color:var(--text-muted); font-size:11px; margin-top:4px; display:block;">
-            Agents ko API key dekhne ki zaroorat nahi hai. Sabhi calls isi central key se securely process hongi.
+            Agents ko API key dekhne ki zaroorat nahi hai. Sabhi requests central server se process hongi.
           </small>
         </div>
         <div class="form-group">
           <label>Model Engine:</label>
           <select id="admin-model">
-            <option value="gemini-1.5-flash">Gemini 1.5 Flash (Super fast & lowest cost for 500 agents)</option>
+            <option value="gemini-1.5-flash">Gemini 1.5 Flash (Super fast &amp; lowest cost for 500 agents)</option>
             <option value="gemini-2.0-flash">Gemini 2.0 Flash (Next-Gen)</option>
             <option value="gemini-1.5-pro">Gemini 1.5 Pro</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Agent Floating Widget Download:</label>
-          <div style="background:#0f172a; border:1px solid var(--border); padding:12px; border-radius:8px;">
-            <p style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">
-              Agents ke PC par sirf yeh installer distribute karein. Yeh auto-configure hokar aapke central server se connect ho jayega:
+          <label>Agent Floating Widget Installer:</label>
+          <div class="installer-box">
+            <p style="font-size:12px; color:var(--text-muted);">
+              Agents ke PC par distribute karne ke liye official installer download karein:
             </p>
-            <code style="font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--accent-cyan); display:block; margin-bottom:10px;">
-              dist/Call-Center-Copilot-Setup.exe
-            </code>
-            <button type="button" class="btn-sync" style="background:#334155;" onclick="alert('Setup file dist/ folder me generate hoti hai (run: npm run dist:win).')">
-              📦 View Installer Instructions
-            </button>
+            <span class="installer-code">
+              CallCenterCopilot-Windows-Setup.exe
+            </span>
+            <a href="https://github.com/kumaranujranchi/vv-callcenterbot/actions" target="_blank" class="btn-top-portal" style="display:inline-flex; width:fit-content; margin-top:4px; font-size:12px; padding:6px 12px;">
+              📦 Download from GitHub Releases
+            </a>
           </div>
         </div>
-        <button type="button" class="btn-submit" onclick="saveAdminSettings()">Save Central Settings</button>
+        <button type="button" class="btn-submit btn-submit-navy" onclick="saveAdminSettings()">Save Central Settings</button>
       </div>
     </div>
   </div>
