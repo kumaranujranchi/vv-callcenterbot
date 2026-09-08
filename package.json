@@ -11,20 +11,23 @@
     "dist": "electron-builder"
   },
   "build": {
-    "appId": "com.callcenter.copilot",
-    "productName": "CallCenterCopilot",
+    "appId": "com.vastuvihar.copilot",
+    "productName": "Vastu Vihar Copilot",
     "directories": {
       "output": "dist"
     },
     "win": {
       "target": [
-        "nsis",
-        "portable"
-      ]
+        "nsis"
+      ],
+      "icon": "public/icon.ico"
     },
     "nsis": {
       "oneClick": true,
+      "perMachine": false,
       "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Vastu Vihar Copilot",
       "runAfterFinish": true
     }
   },
@@ -40,7 +43,7 @@
   },
   "devDependencies": {
     "electron": "^41.7.1",
-    "electron-builder": "^26.15.3",
+    "electron-builder": "^25.1.8",
     "electron-packager": "^17.1.2"
   }
 }

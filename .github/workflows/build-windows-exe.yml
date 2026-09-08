@@ -21,11 +21,18 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Build Windows .exe Installer
-        run: npx electron-packager . "CallCenterCopilot" --platform=win32 --arch=x64 --out=dist --overwrite --prune=true
+      - name: Build Windows Installer (.exe)
+        run: npx electron-builder --win nsis
 
-      - name: Upload Windows .exe as Artifact
+      - name: Prepare Installer File
+        shell: bash
+        run: |
+          mkdir -p dist/setup
+          find dist -maxdepth 1 -name "*.exe" -exec cp {} dist/setup/CallCenterCopilot-Setup.exe \;
+          ls -lh dist/setup/
+
+      - name: Upload Windows Installer as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: CallCenterCopilot-Windows-x64
-          path: dist/CallCenterCopilot-win32-x64/
+          name: CallCenterCopilot-Windows-Setup
+          path: dist/setup/CallCenterCopilot-Setup.exe
