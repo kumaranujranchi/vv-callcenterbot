@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="theme-dark">
+<body class="theme-light">
 
   <!-- 1. FLOATING BUBBLE (COLLAPSED STATE) -->
   <div id="floating-bubble" class="floating-bubble visible" title="Click to open Vastu Vihar Copilot (Ctrl+Shift+Space)">
@@ -39,39 +39,28 @@
             <h1 class="app-title">Vastu Vihar AI Support</h1>
             <span class="badge-live">LIVE</span>
           </div>
-          <p class="subtitle" id="kb-summary">Powered By Team Marketing • 500 Agents</p>
+          <p class="subtitle" id="kb-summary">Powered By Team Marketing</p>
         </div>
       </div>
       <div class="header-actions">
-        <button id="btn-kb" class="icon-btn" title="Knowledge Base Manager">
+        <button id="btn-kb" class="icon-btn" title="Central Knowledge Base">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
         </button>
-        <button id="btn-settings" class="icon-btn" title="API Settings">
+        <button id="btn-settings" class="icon-btn" title="Settings">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         </button>
-        <button id="btn-collapse" class="icon-btn" title="Collapse to Bubble">
+        <button id="btn-collapse" class="icon-btn" title="Minimize to Bubble">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline></svg>
         </button>
       </div>
     </header>
 
-    <!-- Quick Query Suggestions for Call Center Agents -->
-    <div class="quick-chips-container">
-      <div class="chips-scroll">
-        <button class="chip" data-q="Customer ka router red light blink kar raha hai kya karein?">🔴 Red Light LOS Fix</button>
-        <button class="chip" data-q="What are the broadband plans and pricing?">⚡ Broadband Plans</button>
-        <button class="chip" data-q="What is the return and replacement policy?">📦 7-Day Return Policy</button>
-        <button class="chip" data-q="Refund timeline for UPI and Credit Card payments?">💳 Refund Timelines</button>
-        <button class="chip" data-q="Wi-Fi password change karne ke steps batao">📶 Wi-Fi Password</button>
-      </div>
-    </div>
-
-    <!-- Messages Container -->
+    <!-- Messages Container (Clean & Direct) -->
     <main id="chat-messages" class="chat-messages">
       <div class="welcome-message">
-        <div class="welcome-badge">CALL CENTER REAL-TIME COPILOT</div>
-        <h2>Namaste Agent! Call Assist Ready Hai</h2>
-        <p>Customer call ke dauraan koi bhi product question type karein. Instant accurate answer, bullet steps aur customer script mil jayega.</p>
+        <img src="/logo.png" alt="Vastu Vihar" style="height: 38px; object-fit: contain; margin-bottom: 8px;">
+        <h2>Vastu Vihar Copilot</h2>
+        <p>Customer call ke dauran koi bhi question type karein — instant accurate fact ya price mil jayega.</p>
         <div class="shortcut-hint">
           <span>Global Shortcut:</span> <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Space</kbd>
         </div>
@@ -85,19 +74,18 @@
           <input 
             type="text" 
             id="query-input" 
-            placeholder="Ask product query (e.g. router red light, return policy)..." 
+            placeholder="Ask question (e.g. locations, price range, booking)..." 
             autocomplete="off"
             spellcheck="false"
           />
           <button type="button" id="btn-clear-input" class="btn-clear hidden" title="Clear">✕</button>
         </div>
-        <button type="submit" id="btn-send" class="btn-send" title="Search Knowledge Base (Enter)">
+        <button type="submit" id="btn-send" class="btn-send" title="Search (Enter)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
       </form>
       <div class="footer-meta">
-        <span id="response-metric">⚡ Sub-second retrieval active</span>
-        <span class="footer-tag">Call Center v1.0</span>
+        <span id="response-metric">🟢 Connected to Central Knowledge Base</span>
       </div>
     </footer>
   </div>

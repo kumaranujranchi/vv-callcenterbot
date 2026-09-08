@@ -195,21 +195,13 @@ function appendBotMessage(data) {
 
   const htmlAnswer = formatMarkdown(data.answer);
 
-  let sourcesHtml = '';
-  if (data.sources && data.sources.length > 0) {
-    const srcList = data.sources.map(s => s.source).filter((v, i, a) => a.indexOf(v) === i).join(', ');
-    sourcesHtml = `<span class="sources-pill" title="Retrieved from: ${srcList}">📚 ${srcList}</span>`;
-  }
-
   row.innerHTML = `
     <div class="msg-bubble">${htmlAnswer}</div>
     <div class="msg-actions">
       <button class="btn-copy" onclick="copyToClipboard(this)">
         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-        <span>Copy Script</span>
+        <span>Copy</span>
       </button>
-      ${sourcesHtml}
-      ${data.latencyMs ? `<span class="latency-tag">${data.latencyMs}ms</span>` : ''}
     </div>
   `;
 
