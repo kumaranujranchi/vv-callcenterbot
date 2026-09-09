@@ -1,6 +1,24 @@
 const fs = require('fs');
 const path = require('path');
 
+const STOP_WORDS = new Set([
+  // Hindi / Hinglish stopwords
+  'ka', 'ki', 'ke', 'ko', 'se', 'me', 'mein', 'par', 'kya', 'hai', 'hain', 'ho', 'hoga', 'hogi',
+  'hote', 'hoti', 'hota', 'kar', 'kare', 'karein', 'karta', 'karti', 'karte', 'tha', 'thi', 'the',
+  'aur', 'ya', 'to', 'bhi', 'kuch', 'koi', 'sab', 'jo', 'ye', 'yeh', 'wo', 'woh', 'ise', 'use',
+  'unhe', 'unka', 'unki', 'unke', 'mera', 'meri', 'mere', 'apna', 'apni', 'apne', 'kab', 'kahan',
+  'kaun', 'kaise', 'kitna', 'kitni', 'kitne', 'kyun', 'batao', 'bataye', 'batayein', 'bataiye',
+  'kripya', 'please', 'details', 'detail', 'bata', 'dijiye', 'do', 'de', 'h', 'ji', 'sir', 'madam',
+  // English stopwords
+  'a', 'an', 'the', 'is', 'are', 'was', 'were', 'am', 'be', 'been', 'being', 'have', 'has', 'had',
+  'do', 'does', 'did', 'will', 'would', 'shall', 'should', 'can', 'could', 'may', 'might', 'must',
+  'in', 'on', 'at', 'to', 'for', 'of', 'with', 'about', 'against', 'between', 'into', 'through',
+  'during', 'before', 'after', 'above', 'below', 'from', 'up', 'down', 'out', 'off', 'over', 'under',
+  'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any',
+  'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own',
+  'same', 'so', 'than', 'too', 'very', 'just', 'now', 'what', 'which', 'who', 'whom'
+]);
+
 class RAGEngine {
   constructor(knowledgeDir, configPath) {
     this.knowledgeDir = knowledgeDir;
@@ -151,50 +169,69 @@ class RAGEngine {
       .filter(w => w.length > 1);
   }
 
+  getSignificantTokens(tokens) {
+    return tokens.filter(t => !STOP_WORDS.has(t));
+  }
+
   search(query, topK = 8) {
-    const queryTokens = this.tokenize(query);
-    if (queryTokens.length === 0 || this.chunks.length === 0) {
+    const allQueryTokens = this.tokenize(query);
+    if (allQueryTokens.length === 0 || this.chunks.length === 0) {
       return [];
     }
+
+    const significantTokens = this.getSignificantTokens(allQueryTokens);
+    const tokensToMatch = significantTokens.length > 0 ? significantTokens : allQueryTokens;
+    const queryLower = query.toLowerCase().trim();
 
     // Score chunks using TF-IDF / BM25-style frequency scoring
     const scored = this.chunks.map(chunk => {
       let score = 0;
+      let matchedCount = 0;
       const contentLower = chunk.content.toLowerCase();
-      const queryLower = query.toLowerCase();
+      const topicLower = (chunk.topic || '').toLowerCase();
 
-      // Exact phrase bonus
+      // Exact phrase match bonus
       if (contentLower.includes(queryLower)) {
-        score += 25;
+        score += 35;
+        matchedCount += 2;
       }
 
-      // Token matching
       const tokenSet = new Set(chunk.tokens);
-      for (const qToken of queryTokens) {
-        if (tokenSet.has(qToken)) {
-          score += 5;
-        }
-        // Partial match
-        for (const cToken of chunk.tokens) {
-          if (cToken.length > 3 && (cToken.includes(qToken) || qToken.includes(cToken))) {
-            score += 2;
+
+      for (const token of tokensToMatch) {
+        if (tokenSet.has(token)) {
+          score += 10;
+          matchedCount++;
+        } else {
+          // Partial/substring match for tokens > 3 chars
+          for (const cToken of chunk.tokens) {
+            if (cToken.length > 3 && (cToken.includes(token) || token.includes(cToken))) {
+              score += 3;
+              matchedCount += 0.5;
+              break;
+            }
           }
         }
-      }
 
-      // Topic header bonus
-      if (chunk.topic && queryTokens.some(t => chunk.topic.toLowerCase().includes(t))) {
-        score += 8;
+        // Topic header bonus
+        if (topicLower && topicLower.includes(token)) {
+          score += 15;
+          matchedCount++;
+        }
       }
 
       return {
         ...chunk,
-        score
+        score,
+        matchedCount
       };
     });
 
+    // Strict filtering: require substantive relevance score and at least 1 keyword match
+    const minScore = significantTokens.length > 0 ? 10 : 8;
+
     return scored
-      .filter(c => c.score > 0)
+      .filter(c => c.score >= minScore && c.matchedCount >= 1)
       .sort((a, b) => b.score - a.score)
       .slice(0, topK);
   }
@@ -203,9 +240,21 @@ class RAGEngine {
     const startTime = Date.now();
     const retrievedChunks = this.search(query, 8);
 
+    // If no relevant documents found in knowledge base, immediately return "Ye details available nahi hai."
+    if (retrievedChunks.length === 0) {
+      return {
+        query,
+        answer: "Ye details available nahi hai.",
+        usedAI: false,
+        confidence: "None",
+        latencyMs: Date.now() - startTime,
+        sources: []
+      };
+    }
+
     let answer = '';
     let usedAI = false;
-    let confidence = 'Low';
+    let confidence = 'High';
 
     const contextText = retrievedChunks
       .map((c, i) => `[Document ${i + 1}: ${c.source} | Section: ${c.topic}]\n${c.content}`)
@@ -215,7 +264,6 @@ class RAGEngine {
       try {
         answer = await this.callGeminiAPI(query, contextText);
         usedAI = true;
-        confidence = retrievedChunks.length > 0 ? 'High' : 'General';
       } catch (err) {
         console.error('Gemini API Error, falling back to local extractor:', err.message);
         answer = this.synthesizeLocalAnswer(query, retrievedChunks);
@@ -228,7 +276,7 @@ class RAGEngine {
 
     return {
       query,
-      answer,
+      answer: (answer || '').trim(),
       usedAI,
       confidence,
       latencyMs,
@@ -241,27 +289,43 @@ class RAGEngine {
   }
 
   async callGeminiAPI(query, context) {
-    const systemPrompt = `You are an Ultra-Fast Instant Fact Lookup Assistant for Vastu Vihar Call Center Agents on live telephone calls.
+    const systemPrompt = `You are an Ultra-Fast, 100% Factually Grounded Instant Fact Lookup Assistant for Vastu Vihar Call Center Agents handling live customer calls.
 
-STRICT CALL CENTER RULES:
-1. Answer in MAXIMUM 1 TO 2 SHORT SENTENCES (or 2-3 brief bullet facts, under 30 words total).
-2. NO long paragraphs, NO introductions ("Here are the details", "Sure", "Based on context"), NO conversational filler, NO repetitive disclaimers.
-3. Give ONLY the exact fact, price, city, step, or direct answer so the agent's eyes catch it in 1 second and read it to the customer.
-4. Answer in the same language as asked (Hindi, Hinglish, or English).
+CRITICAL RULES:
+1. HAR QUESTION KA SPECIFIC ANSWER DEIN:
+   - Provide an exact, direct, and factual answer in 1 to 2 short sentences (or 2-3 brief bullet points, strictly under 35 words).
+   - Give the exact number, price, percentage, location, city name, phone number, email, or rule immediately.
+   - NO introductions ("Sure", "Here are the details", "Based on records"), NO filler, NO conversational chit-chat.
 
-CONTEXT FROM VASTU VIHAR KNOWLEDGE BASE:
-${context || 'No specific document found.'}
+2. DETAILS NAHI HONE PAR STRICT RULE:
+   - If the specific details, facts, numbers, dates, people, or answers to the customer's question are NOT explicitly present in the CONTEXT below, you MUST reply ONLY:
+     "Ye details available nahi hai."
+     (If the customer asked in English: "This detail is not available in our records.")
+   - NEVER guess, NEVER assume, NEVER fabricate, and NEVER use external or world knowledge.
+   - If only partial information is available, provide the specific known fact and explicitly add: "Baaki details available nahi hai."
 
-CUSTOMER QUERY VIA AGENT:
+3. LANGUAGE:
+   - Answer in the same language as the question (Hindi, Hinglish, or English).
+
+CONTEXT FROM KNOWLEDGE BASE:
+${context}
+
+CUSTOMER QUERY:
 ${query}`;
 
-    // Prefer gemini-3.6-flash (current generation). Auto-migrate legacy models.
-    let selectedModel = this.config.model || 'gemini-3.6-flash';
-    if (['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash', 'gemini-flash-latest'].includes(selectedModel)) {
-      selectedModel = 'gemini-3.6-flash';
+    // Prefer verified active generation models
+    let selectedModel = this.config.model || 'gemini-3.5-flash';
+    if (['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash', 'gemini-flash-latest', 'gemini-3.6-flash'].includes(selectedModel)) {
+      selectedModel = 'gemini-3.5-flash';
     }
 
-    const candidateModels = [selectedModel, 'gemini-3.6-flash', 'gemini-3.7-flash'];
+    const candidateModels = [
+      selectedModel,
+      'gemini-3.5-flash',
+      'gemini-3.5-flash-lite',
+      'gemini-3.8-flash',
+      'gemini-3.1-flash-lite'
+    ];
     const uniqueModels = [...new Set(candidateModels)];
 
     let lastError = null;
@@ -282,7 +346,7 @@ ${query}`;
             ],
             generationConfig: {
               temperature: 0.1,
-              maxOutputTokens: 1024
+              maxOutputTokens: 512
             }
           })
         });
@@ -307,22 +371,41 @@ ${query}`;
   }
 
   synthesizeLocalAnswer(query, chunks) {
-    if (chunks.length === 0) {
-      return `❌ **Koi match nahi mila (No direct match found in Knowledge Base)**\n\nIs query ke baare mein knowledge base documents me jaankari nahi mili. Kripya naye documents upload karein ya support lead se verify karein.`;
+    if (!chunks || chunks.length === 0) {
+      return "Ye details available nahi hai.";
     }
 
+    const allQueryTokens = this.tokenize(query);
+    const significantTokens = this.getSignificantTokens(allQueryTokens);
     const topChunk = chunks[0];
-    let formatted = `📋 **Knowledge Base Match (${topChunk.source})**\n\n`;
-    formatted += `${topChunk.content.trim()}\n\n`;
 
-    if (chunks.length > 1) {
-      formatted += `\n🔍 **Related Points (${chunks[1].source})**:\n`;
-      const secondSnippet = chunks[1].content.split('\n').filter(l => l.trim().length > 0).slice(0, 3).join('\n');
-      formatted += `${secondSnippet}\n`;
+    const topContentLower = topChunk.content.toLowerCase();
+    const hasSigMatch = significantTokens.some(t => topContentLower.includes(t));
+
+    if (!hasSigMatch && significantTokens.length > 0) {
+      return "Ye details available nahi hai.";
     }
 
-    formatted += `\n> 💡 *Note: Real-time generative AI bullet answers ke liye Settings me Gemini API key add karein.*`;
-    return formatted;
+    // Try to extract lines matching the question or Q&A
+    const lines = topChunk.content.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    const matchedLines = [];
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const lineLower = line.toLowerCase();
+      if (significantTokens.some(t => lineLower.includes(t))) {
+        matchedLines.push(line);
+        if (i + 1 < lines.length && (lines[i + 1].startsWith('A:') || lines[i + 1].startsWith('●') || lines[i + 1].startsWith('-'))) {
+          matchedLines.push(lines[i + 1]);
+        }
+      }
+    }
+
+    if (matchedLines.length > 0) {
+      return matchedLines.slice(0, 3).join('\n');
+    }
+
+    return "Ye details available nahi hai.";
   }
 
   async addDocument(filename, content, isBinary = false) {

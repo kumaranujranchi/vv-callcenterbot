@@ -16,3 +16,6 @@ npm-debug.log*
 .env
 .env.local
 config.json
+
+# Large download binaries
+public/downloads/
