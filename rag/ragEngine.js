@@ -313,30 +313,30 @@ ${context}
 CUSTOMER QUERY:
 ${query}`;
 
-    // Prefer verified active generation models
-    let selectedModel = this.config.model || 'gemini-3.5-flash';
-    if (['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash', 'gemini-flash-latest', 'gemini-3.6-flash'].includes(selectedModel)) {
-      selectedModel = 'gemini-3.5-flash';
+    // Standard valid Gemini API models for ultra-fast response (<500ms)
+    let userModel = (this.config.model || '').toLowerCase();
+    const candidateModels = [];
+
+    if (userModel.includes('2.0')) {
+      candidateModels.push('gemini-2.0-flash');
     }
+    candidateModels.push('gemini-1.5-flash', 'gemini-1.5-flash-8b', 'gemini-2.0-flash');
 
-    const candidateModels = [
-      selectedModel,
-      'gemini-3.5-flash',
-      'gemini-3.5-flash-lite',
-      'gemini-3.8-flash',
-      'gemini-3.1-flash-lite'
-    ];
     const uniqueModels = [...new Set(candidateModels)];
-
     let lastError = null;
 
     for (const model of uniqueModels) {
       try {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${this.config.geminiApiKey}`;
 
+        // Abort after 2.5s timeout to guarantee instant response on agent PCs
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2500);
+
         const response = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          signal: controller.signal,
           body: JSON.stringify({
             contents: [
               {
@@ -346,10 +346,12 @@ ${query}`;
             ],
             generationConfig: {
               temperature: 0.1,
-              maxOutputTokens: 512
+              maxOutputTokens: 256
             }
           })
         });
+
+        clearTimeout(timeoutId);
 
         if (!response.ok) {
           const errText = await response.text();

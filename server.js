@@ -45,7 +45,7 @@ app.post('/api/query', async (req, res) => {
   }
 
   totalQueries++;
-  const cacheKey = query.trim().toLowerCase();
+  const cacheKey = query.trim().toLowerCase().replace(/[^\w\s\u0900-\u097F]/g, '').replace(/\s+/g, ' ');
 
   // Cache Check: Sub-second instantaneous response
   if (queryCache.has(cacheKey)) {
