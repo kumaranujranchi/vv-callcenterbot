@@ -677,6 +677,147 @@
       50% { opacity: 1; transform: scale(1.2); }
       100% { opacity: 0.6; transform: scale(0.9); }
     }
+
+    /* Download Notification Modal */
+    .dl-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(6px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 1;
+      transition: all 0.25s ease;
+    }
+
+    .dl-modal-overlay.hidden {
+      display: none;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .dl-modal-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 25px 50px -12px rgba(28, 43, 89, 0.25);
+      position: relative;
+      animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes modalSlideUp {
+      from { transform: translateY(20px) scale(0.96); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    .dl-modal-close-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--text-muted);
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .dl-modal-close-btn:hover {
+      background: #f1f5f9;
+      color: var(--brand-navy);
+    }
+
+    .dl-modal-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: rgba(242, 53, 69, 0.1);
+      color: var(--brand-red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .dl-modal-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--brand-navy);
+      margin-bottom: 6px;
+    }
+
+    .dl-modal-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .dl-modal-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .dl-step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--brand-light);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      font-size: 13px;
+    }
+
+    .dl-step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--brand-navy);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .dl-step-num-warn {
+      background: rgba(242, 53, 69, 0.15);
+      color: var(--brand-red);
+      font-size: 14px;
+    }
+
+    .dl-step-item strong {
+      color: var(--brand-navy);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .dl-step-item p {
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    .dl-step-alert {
+      border-color: rgba(242, 53, 69, 0.3);
+      background: #fffbfb;
+    }
   </style>
 </head>
 <body>
@@ -838,6 +979,38 @@
               Agar open karne par <em>"App is damaged"</em> dikhe, to Terminal me sirf yeh 1 command chalayein:<br/>
               <code style="background:#ffffff; padding:3px 6px; border-radius:4px; font-weight:600; color:var(--brand-red); display:inline-block; margin-top:4px; user-select:all;">xattr -cr /Applications/CallCenterCopilot.app</code>
             </div>
+        </div>
+      </div>
+
+      <!-- Windows Security Warning Resolution Card -->
+      <div style="background:#ffffff; border:1px solid var(--border-subtle); border-left:5px solid var(--brand-sky); border-radius:var(--radius-lg); padding:24px 28px; margin-bottom:56px; box-shadow:var(--shadow-sm);">
+        <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap;">
+          <div style="width:44px; height:44px; border-radius:12px; background:rgba(48,169,217,0.12); color:var(--brand-sky); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <div style="flex:1; min-width:280px;">
+            <h4 style="font-size:16px; font-weight:800; color:var(--brand-navy); margin-bottom:6px; display:flex; align-items:center; gap:8px;">
+              🛡️ Windows Security Warning (SmartScreen) Resolution
+              <span style="font-size:10px; font-weight:800; background:rgba(48,169,217,0.15); color:var(--brand-sky); padding:2px 8px; border-radius:12px;">Trust &amp; Security</span>
+            </h4>
+            <p style="font-size:13px; color:var(--text-muted); line-height:1.5; margin-bottom:12px;">
+              Jab aap portal se direct `.exe` installer download karte hain, to Windows <em>"Windows protected your PC / Unknown Publisher"</em> ki security warning dikha sakta hai. Yeh kisi bhi naye internal desktop application ke liye Windows Defender ka normal behavior hai.
+            </p>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
+              <div style="background:rgba(28,43,89,0.03); border:1px solid var(--border-subtle); border-radius:10px; padding:12px 16px;">
+                <strong style="font-size:13px; color:var(--brand-navy); display:block; margin-bottom:4px;">1. User Direct Run (SmartScreen Bypass)</strong>
+                <span style="font-size:12px; color:var(--text-body);">
+                  Warning screen aane par <strong>"More info"</strong> (Jaankari) par click karein &rarr; Phir <strong>"Run anyway"</strong> (Fir bhi chalayein) select karein. Installation turant shuru ho jayegi.
+                </span>
+              </div>
+              <div style="background:rgba(28,43,89,0.03); border:1px solid var(--border-subtle); border-radius:10px; padding:12px 16px;">
+                <strong style="font-size:13px; color:var(--brand-navy); display:block; margin-bottom:4px;">2. IT Admin PowerShell Unblock (Automatic)</strong>
+                <span style="font-size:12px; color:var(--text-muted); display:block; margin-bottom:4px;">System admin 1-line command se block remove kar sakte hain:</span>
+                <code style="font-size:11px; background:#ffffff; border:1px solid #cbd5e1; padding:4px 8px; border-radius:4px; display:block; color:var(--brand-dark-red); word-break:break-all; user-select:all;">
+                  Unblock-File -Path "$env:USERPROFILE\Downloads\CallCenterCopilot-Setup.exe"
+                </code>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -905,7 +1078,69 @@
     </footer>
   </div>
 
+  <!-- DOWNLOAD NOTIFICATION MODAL (INTERACTIVE TOAST / BANNER) -->
+  <div id="dl-modal-overlay" class="dl-modal-overlay hidden">
+    <div class="dl-modal-card">
+      <button id="dl-modal-close" class="dl-modal-close-btn">&times;</button>
+      <div class="dl-modal-icon">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      </div>
+      <h3 class="dl-modal-title">Installation Setup Downloading!</h3>
+      <p class="dl-modal-subtitle">Aapka Vastu Vihar Desktop Assistant setup file download ho raha hai.</p>
+      
+      <div class="dl-modal-steps">
+        <div class="dl-step-item">
+          <span class="dl-step-num">1</span>
+          <div>
+            <strong>Check Browser Downloads</strong>
+            <p>Browser ke download bar ya <kbd style="background:#f1f5f9; border:1px solid #cbd5e1; padding:1px 5px; border-radius:4px; font-size:11px; font-family:monospace;">Downloads</kbd> folder me <code id="dl-filename-tag" style="color:var(--brand-red); font-weight:700;">CallCenterCopilot-Setup.exe</code> file check karein.</p>
+          </div>
+        </div>
+        <div class="dl-step-item">
+          <span class="dl-step-num">2</span>
+          <div>
+            <strong>Double Click to Install</strong>
+            <p>Download poora hote hi installer file ko click karke run karein.</p>
+          </div>
+        </div>
+        <div class="dl-step-item dl-step-alert">
+          <span class="dl-step-num dl-step-num-warn">🛡️</span>
+          <div>
+            <strong style="color:var(--brand-dark-red);">Windows Security Warning (SmartScreen)?</strong>
+            <p>Agar screen par <em>"Windows protected your PC"</em> dikhe, to <strong>"More info"</strong> (Jaankari) par click karein phir <strong>"Run anyway"</strong> (Fir bhi chalayein) button dabayein.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="dl-modal-footer">
+        <button id="dl-modal-dismiss-btn" class="btn-download-red" style="width:100%; cursor:pointer;">Samajh Gaya (Close)</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Handle Download Buttons Notification
+    const dlModal = document.getElementById('dl-modal-overlay');
+    const dlClose = document.getElementById('dl-modal-close');
+    const dlDismiss = document.getElementById('dl-modal-dismiss-btn');
+    const dlFileNameTag = document.getElementById('dl-filename-tag');
+
+    document.querySelectorAll('a[download]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const downloadAttr = btn.getAttribute('download') || 'CallCenterCopilot-Setup.exe';
+        dlFileNameTag.textContent = downloadAttr;
+        dlModal.classList.remove('hidden');
+      });
+    });
+
+    if (dlClose) dlClose.addEventListener('click', () => dlModal.classList.add('hidden'));
+    if (dlDismiss) dlDismiss.addEventListener('click', () => dlModal.classList.add('hidden'));
+    if (dlModal) {
+      dlModal.addEventListener('click', (e) => {
+        if (e.target === dlModal) dlModal.classList.add('hidden');
+      });
+    }
+
     // Fetch live knowledge stats dynamically
     async function loadLiveStats() {
       try {

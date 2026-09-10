@@ -19,6 +19,11 @@ if (clientConfig.serverUrl.includes('localhost') || clientConfig.serverUrl.inclu
   require('./server');
 }
 
+// Set AppUserModelId for proper taskbar grouping & icon display on Windows
+if (process.platform === 'win32') {
+  app.setAppUserModelId('com.vastuvihar.copilot');
+}
+
 let mainWindow;
 let tray = null;
 let isExpanded = false;
@@ -35,6 +40,11 @@ function createWindow() {
   const initialX = screenWidth - BUBBLE_SIZE.width - 24;
   const initialY = screenHeight - BUBBLE_SIZE.height - 40;
 
+  // Icon path resolution (ico for Windows, png as fallback)
+  const icoPath = path.join(__dirname, 'public', 'icon.ico');
+  const pngPath = path.join(__dirname, 'public', 'logo.png');
+  const appIcon = fs.existsSync(icoPath) ? icoPath : (fs.existsSync(pngPath) ? pngPath : undefined);
+
   mainWindow = new BrowserWindow({
     width: BUBBLE_SIZE.width,
     height: BUBBLE_SIZE.height,
@@ -46,11 +56,36 @@ function createWindow() {
     hasShadow: false,
     resizable: false,
     skipTaskbar: false,
+    icon: appIcon,
+    title: 'Vastu Vihar Copilot',
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
     }
   });
+
+  if (appIcon && mainWindow.setIcon) {
+    mainWindow.setIcon(appIcon);
+  }
+
+  // Initialize System Tray Icon with Vastu Vihar logo
+  if (appIcon && !tray) {
+    try {
+      tray = new Tray(appIcon);
+      const contextMenu = Menu.buildFromTemplate([
+        { label: 'Vastu Vihar Copilot v1.0', enabled: false },
+        { type: 'separator' },
+        { label: 'Show / Hide Assistant', click: () => toggleExpandState() },
+        { type: 'separator' },
+        { label: 'Quit Application', click: () => app.quit() }
+      ]);
+      tray.setToolTip('Vastu Vihar Copilot');
+      tray.setContextMenu(contextMenu);
+      tray.on('click', () => toggleExpandState());
+    } catch (err) {
+      console.warn('Tray creation error:', err);
+    }
+  }
 
   // Always on top level (screen saver / floating level on Mac & Windows)
   mainWindow.setAlwaysOnTop(true, 'floating');

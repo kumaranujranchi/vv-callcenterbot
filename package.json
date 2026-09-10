@@ -20,7 +20,10 @@
       "target": [
         "nsis"
       ],
-      "icon": "public/icon.ico"
+      "icon": "public/icon.ico",
+      "publisherName": "Vastu Vihar Marketing Team",
+      "verifyUpdateCodeSignature": false,
+      "requestedExecutionLevel": "asInvoker"
     },
     "nsis": {
       "oneClick": true,
@@ -28,7 +31,10 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "Vastu Vihar Copilot",
-      "runAfterFinish": true
+      "runAfterFinish": true,
+      "installerIcon": "public/icon.ico",
+      "uninstallerIcon": "public/icon.ico",
+      "installerHeaderIcon": "public/icon.ico"
     }
   },
   "keywords": [],
